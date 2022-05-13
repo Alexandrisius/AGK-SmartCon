@@ -5,7 +5,23 @@ VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "00_SmartCon_RibonPanel", "00_SmartCon_RibonPanel\00_SmartCon_RibonPanel.csproj", "{3C89FB67-6D4C-4CE5-A5FF-BBD09361A1C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_PipeConnect", "C:\Users\klim9\YandexDisk\Работа\MI System\#Resources\02_Software\01_AutodeskRevit\2021\07_Plugins\PPR_Services\ToConnect\01_PipeConnect.csproj", "{9B7587FC-B714-46FA-9738-02E5EC75CE12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_PipeConnect", "01_PipeConnect\01_PipeConnect.csproj", "{FFB504CA-EB92-4480-9027-90A16712F95D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_PipeSystem", "01_PipeSystem", "{E007DD9A-EDE4-4CB9-A6B9-34958FDBFEF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_RotateElements", "02_RotateElements\02_RotateElements.csproj", "{18F8925A-FBBC-4FFE-A369-BAF99AFD2C9D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00_General", "00_General", "{B030A4E0-18F8-48E1-A402-B7250A80D315}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_AlignElements", "03_AlignElements\03_AlignElements.csproj", "{89E702C8-D137-4680-8A40-1BFECFE6289E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02_DuctSystem", "02_DuctSystem", "{CFA94AB5-70AE-4A23-8360-E455E3EAEC54}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03_ProjectManagement", "03_ProjectManagement", "{FED52FDE-6F6A-45DF-89BA-FFA05C0F1DD7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04_Annotation", "04_Annotation", "{A2CEB0F0-1752-44A2-A139-DF876A1E968B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_FamilyManager", "01_FamilyManager\01_FamilyManager.csproj", "{9F0FB791-9BEC-431E-AECF-9078313DFAD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,13 +33,32 @@ Global
 		{3C89FB67-6D4C-4CE5-A5FF-BBD09361A1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C89FB67-6D4C-4CE5-A5FF-BBD09361A1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C89FB67-6D4C-4CE5-A5FF-BBD09361A1C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B7587FC-B714-46FA-9738-02E5EC75CE12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B7587FC-B714-46FA-9738-02E5EC75CE12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B7587FC-B714-46FA-9738-02E5EC75CE12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B7587FC-B714-46FA-9738-02E5EC75CE12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFB504CA-EB92-4480-9027-90A16712F95D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFB504CA-EB92-4480-9027-90A16712F95D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFB504CA-EB92-4480-9027-90A16712F95D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFB504CA-EB92-4480-9027-90A16712F95D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18F8925A-FBBC-4FFE-A369-BAF99AFD2C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18F8925A-FBBC-4FFE-A369-BAF99AFD2C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18F8925A-FBBC-4FFE-A369-BAF99AFD2C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18F8925A-FBBC-4FFE-A369-BAF99AFD2C9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89E702C8-D137-4680-8A40-1BFECFE6289E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89E702C8-D137-4680-8A40-1BFECFE6289E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89E702C8-D137-4680-8A40-1BFECFE6289E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89E702C8-D137-4680-8A40-1BFECFE6289E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F0FB791-9BEC-431E-AECF-9078313DFAD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F0FB791-9BEC-431E-AECF-9078313DFAD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F0FB791-9BEC-431E-AECF-9078313DFAD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F0FB791-9BEC-431E-AECF-9078313DFAD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3C89FB67-6D4C-4CE5-A5FF-BBD09361A1C6} = {B030A4E0-18F8-48E1-A402-B7250A80D315}
+		{FFB504CA-EB92-4480-9027-90A16712F95D} = {E007DD9A-EDE4-4CB9-A6B9-34958FDBFEF0}
+		{18F8925A-FBBC-4FFE-A369-BAF99AFD2C9D} = {E007DD9A-EDE4-4CB9-A6B9-34958FDBFEF0}
+		{89E702C8-D137-4680-8A40-1BFECFE6289E} = {E007DD9A-EDE4-4CB9-A6B9-34958FDBFEF0}
+		{9F0FB791-9BEC-431E-AECF-9078313DFAD9} = {FED52FDE-6F6A-45DF-89BA-FFA05C0F1DD7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2F9A62B0-82ED-44F5-8EF0-AB00CA3EFBFA}

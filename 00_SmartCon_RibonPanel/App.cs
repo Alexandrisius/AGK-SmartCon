@@ -33,7 +33,7 @@ namespace SmartCon
             Image imageConnect = Properties.Resources.PipeCon_16х16;
             ImageSource imageConnectSource = GetImageSource(imageConnect);
 
-            PushButtonData PBD_1 = new PushButtonData("Pipe\nConnect", "Pipe Connect", this.path + "\\PipeConnect.dll", "ToConnect.StartPlugin")
+            PushButtonData PBD_1 = new PushButtonData("Pipe Connect", "Pipe Connect", this.path + "\\PipeConnect.dll", "PipeConnect.StartPlugin")
             {
                 ToolTip = "Присоединение трубопроводных элементов.",
                 LongDescription = "Присоединяет коннекторы компонентов трубопроводных систем. Базовым элементом является компонент который пользователь выбрал в первую очередь. ",
@@ -45,7 +45,6 @@ namespace SmartCon
             button_Connect_1.Enabled = true;
             #endregion
 
-            //ribbonPanel.AddSeparator();
 
             #region CreateButtonRotateElements
             Image LargeImageConnect_RE = Properties.Resources.RotatEl_32x32;
@@ -53,7 +52,7 @@ namespace SmartCon
             Image imageConnect_RE = Properties.Resources.RotatEl_16x16;
             ImageSource imageConnectSource_RE = GetImageSource(imageConnect_RE);
 
-            PushButtonData PBD_RE = new PushButtonData("RotatEL", "Rotate Elements", this.path + "\\RotatEL.dll", "RotatEL.StartClass")
+            PushButtonData PBD_RE = new PushButtonData("Rotate Elements", "Rotate Elements", this.path + "\\RotateElements.dll", "RotateElements.StartPlugin")
             {
                 ToolTip = "Вращает элементы вокруг оси выбранного коннектора.",
                 LongDescription = "Вращает элементы вокруг оси выбранного коннектора со всеми присоединёнными к нему элементами. ",
@@ -71,7 +70,7 @@ namespace SmartCon
             Image imageConnect_AE = Properties.Resources.AlignEl_16x16;
             ImageSource imageConnectSource_AE = GetImageSource(imageConnect_AE);
 
-            PushButtonData PBD_AE = new PushButtonData("AlignEl", "Align Elements", this.path + "\\AlignEl.dll", "AlignEl.StartClass")
+            PushButtonData PBD_AE = new PushButtonData("Align Elements", "Align Elements", this.path + "\\AlignElements.dll", "AlignElements.StartPlugin")
             {
                 ToolTip = "Выравнивает элементы по оси выбранного коннектора.",
                 LongDescription = "Выравнивает элементы по оси выбранного коннектора со всеми присоединёнными к нему элементами. ",
@@ -89,7 +88,7 @@ namespace SmartCon
             Image imageConnect_2 = Properties.Resources.FamilyMan_16х16;
             ImageSource imageConnectSource_2 = GetImageSource(imageConnect_2);
 
-            PushButtonData PBD_2 = new PushButtonData("FamilyMan", "Family Manager", this.path + "\\FamilyMan.dll", "FamilyMan.StartClass")
+            PushButtonData PBD_2 = new PushButtonData("Family Manager", "Family Manager", this.path + "\\FamilyManager.dll", "FamilyManager.StartPlugin")
             {
                 ToolTip = "Менеджер семейств.",
                 LongDescription = "Система менеджмента элементов модели. ",

@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанные со сборкой.
-[assembly: AssemblyTitle("RibonPanel")]
-[assembly: AssemblyDescription("Ribon Panel")]
+[assembly: AssemblyTitle("AlignElements")]
+[assembly: AssemblyDescription("Align Elements")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Klimovich Alexander")]
 [assembly: AssemblyProduct("SmartCon")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("3c89fb67-6d4c-4ce5-a5ff-bbd09361a1c6")]
+[assembly: Guid("89e702c8-d137-4680-8a40-1bfecfe6289e")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //
