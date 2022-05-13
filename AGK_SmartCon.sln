@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32505.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "00_SmartCon_RibonPanel", "00_SmartCon_RibonPanel\00_SmartCon_RibonPanel.csproj", "{3C89FB67-6D4C-4CE5-A5FF-BBD09361A1C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_PipeConnect", "C:\Users\klim9\YandexDisk\Работа\MI System\#Resources\02_Software\01_AutodeskRevit\2021\07_Plugins\PPR_Services\ToConnect\01_PipeConnect.csproj", "{9B7587FC-B714-46FA-9738-02E5EC75CE12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C89FB67-6D4C-4CE5-A5FF-BBD09361A1C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C89FB67-6D4C-4CE5-A5FF-BBD09361A1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C89FB67-6D4C-4CE5-A5FF-BBD09361A1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C89FB67-6D4C-4CE5-A5FF-BBD09361A1C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B7587FC-B714-46FA-9738-02E5EC75CE12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B7587FC-B714-46FA-9738-02E5EC75CE12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B7587FC-B714-46FA-9738-02E5EC75CE12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B7587FC-B714-46FA-9738-02E5EC75CE12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2F9A62B0-82ED-44F5-8EF0-AB00CA3EFBFA}
+	EndGlobalSection
+EndGlobal

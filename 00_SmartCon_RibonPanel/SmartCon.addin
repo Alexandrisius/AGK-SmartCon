@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>Application SmartCon</Name>
+    <Assembly>SmartCon.dll</Assembly>
+    <FullClassName>SmartCon.App</FullClassName>
+    <ClientId>3866a3b4-1c66-451c-b1f9-6b7010cc8077</ClientId>
+    <VendorId>AGK</VendorId>
+    <VendorDescription>Klimovich Alexandr</VendorDescription>
+  </AddIn>
+</RevitAddIns>
