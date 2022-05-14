@@ -25,6 +25,30 @@ namespace RotateElements
                     }
                 }
             }
+            return false;
+        }
+
+        public bool AllowReference(Reference reference, XYZ position)
+        {
+            return false;
+        }
+    }
+    public class FilterWithPipe : ISelectionFilter
+    {
+        public bool AllowElement(Element elem)
+        {
+            if (elem is FamilyInstance family)
+            {
+                ConnectorManager list = family.MEPModel.ConnectorManager;
+
+                foreach (Connector item in list.Connectors)
+                {
+                    if (item.Domain == Domain.DomainPiping)
+                    {
+                        return true;
+                    }
+                }
+            }
 
 
             if (elem is Pipe curve)

@@ -58,7 +58,6 @@
   <ItemGroup>
     <Compile Include="PerAction\CheckSizeConnector.cs" />
     <Compile Include="PerAction\ConnectElement.cs" />
-    <Compile Include="PerAction\CreateConnect.cs" />
     <Compile Include="GetData\ElementConnectorIterator.cs" />
     <Compile Include="GetData\PlanePointCalculator.cs" />
     <Compile Include="GetData\PointOriginConnectors.cs" />

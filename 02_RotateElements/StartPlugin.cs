@@ -21,13 +21,14 @@ namespace RotateElements
             Document doc = uidoc.Document;
             Selection sel = uiapp.ActiveUIDocument.Selection;
 
-            Filter Isf = new Filter();
+            Filter filter = new Filter();
+            FilterWithPipe filterWithPipe = new FilterWithPipe();
 
             Element elem1 = null;
             Element elem2 = null;
             try
             {
-                elem1 = doc.GetElement(sel.PickObject(ObjectType.Element, Isf, "Выберите элемент который необходимо повернуть"));
+                elem1 = doc.GetElement(sel.PickObject(ObjectType.Element, filter, "Выберите элемент который необходимо повернуть"));
                 if (elem1 == null)
                 {
                     TaskDialog.Show("Ошибка", "Объект для вращения не найден");
@@ -43,7 +44,7 @@ namespace RotateElements
             {
                 try
                 {
-                    elem2 = doc.GetElement(sel.PickObject(ObjectType.Element, Isf, "Выберите элемент который будет являться осью вращения"));
+                    elem2 = doc.GetElement(sel.PickObject(ObjectType.Element, filterWithPipe, "Выберите элемент который будет являться осью вращения"));
                     if (elem2 == null)
                     {
                         TaskDialog.Show("Ошибка", "Ось вращения не найдена");

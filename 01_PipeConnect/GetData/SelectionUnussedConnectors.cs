@@ -37,22 +37,5 @@ namespace PipeConnect
 
             return false;
         }
-        public static bool GetUsedConnectors(Element elem)
-        {
-            if (elem is FamilyInstance family)
-            {
-                ConnectorManager list = family.MEPModel.ConnectorManager;
-               
-                    foreach (Connector item in list.Connectors)
-                    {
-                        if (item.Domain == Domain.DomainPiping)
-                        {
-                            return true;
-                        }
-                    }
-            }
-
-            return false;
-        }
     }
 }
