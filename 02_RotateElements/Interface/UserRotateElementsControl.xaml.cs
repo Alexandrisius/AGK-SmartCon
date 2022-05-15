@@ -18,12 +18,14 @@ namespace RotateElements
         Document _doc;
         Element _elem1;
         Element _elem2;
+        XYZ _point;
 
-        public UserRotateElementsControl(Document doc, Element elem1, Element elem2)
+        public UserRotateElementsControl(Document doc, Element elem1, Element elem2, XYZ point)
         {
             _doc = doc;
             _elem1 = elem1;
             _elem2 = elem2;
+            _point = point;
             InitializeComponent();
         }
 
@@ -31,7 +33,12 @@ namespace RotateElements
         {
             if (Check.IsChecked == true)
             {
-                
+                Rotater.TurnLeft(_doc, _elem1, _elem2, Double.Parse(AngleText.Text), 1, _point);
+            }
+            else
+            {
+                Rotater.TurnLeft(_doc, _elem1, _elem2, Double.Parse(AngleText.Text), 2, _point);
+
             }
 
         }
@@ -40,6 +47,11 @@ namespace RotateElements
         {
             if (Check.IsChecked == true)
             {
+                Rotater.TurnRight(_doc, _elem1, _elem2, Double.Parse(AngleText.Text),1, _point);
+            }
+            else
+            {
+                Rotater.TurnRight(_doc, _elem1, _elem2, Double.Parse(AngleText.Text), 2, _point);
 
             }
         }

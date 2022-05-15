@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autodesk.Revit.DB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,60 @@ namespace RotateElements
 {
     internal class Rotater
     {
+        public static void TurnRight(Document doc, Element elem1, Element elem2, double angle, int type, XYZ point)
+        {
+            ICollection<ElementId> elemId = Iterator.GetElements(elem1, elem2);
+
+            Line lineZ = ConnectorCalculator.GetAxisByTwoElements(elem1, elem2, point);
+
+            using (var tx = new Transaction(doc))
+            {
+                tx.Start("TurnRight");
+
+                if (angle != 0 && type == 1)
+                {
+                    ElementTransformUtils.RotateElements(doc, elemId, lineZ, angle * Math.PI / 180);
+
+                }
+                if (angle != 0 && type == 2)
+                {
+                    ElementTransformUtils.RotateElement(doc, elem1.Id, lineZ, angle * Math.PI / 180);
+
+                }
+
+                tx.Commit();
+            }
+
+
+        }
+        public static void TurnLeft(Document doc, Element elem1, Element elem2, double angle, int type, XYZ point)
+        {
+            ICollection<ElementId> elemId = Iterator.GetElements(elem1, elem2);
+
+            Line lineZ = ConnectorCalculator.GetAxisByTwoElements(elem1, elem2, point);
+
+            using (var tx = new Transaction(doc))
+            {
+                tx.Start("TurnLeft");
+
+
+                if (angle != 0 && type == 1)
+                {
+                    ElementTransformUtils.RotateElements(doc, elemId, lineZ, -angle * Math.PI / 180);
+
+                }
+                if (angle != 0 && type == 2)
+                {
+                    ElementTransformUtils.RotateElement(doc, elem1.Id, lineZ, -angle * Math.PI / 180);
+
+                }
+
+                tx.Commit();
+            }
+
+
+        }
+
     }
 }
+

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace RotateElements
 {
-    internal class Iterator
+     class Iterator
     {
-        public static List<ElementId> GetElements(Element elem_ForRotate, Element elem_Axis)
+        public static ICollection<ElementId> GetElements(Element elem_ForRotate, Element elem_Axis)
         {
-            List<ElementId> listElements = new List<ElementId>();
+            ICollection<ElementId> listElements = new List<ElementId>();
 
             ConnectorSet connectorSet = GetConnectorSet(elem_ForRotate);
 

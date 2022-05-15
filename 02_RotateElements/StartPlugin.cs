@@ -26,6 +26,7 @@ namespace RotateElements
 
             Element elem1 = null;
             Element elem2 = null;
+            XYZ point = null;
             try
             {
                 elem1 = doc.GetElement(sel.PickObject(ObjectType.Element, filter, "Выберите элемент который необходимо повернуть"));
@@ -40,11 +41,13 @@ namespace RotateElements
                 TaskDialog.Show("Внимание", "Объект для вращения не найден");
                 return Result.Failed;
             }
-            if (elem1!=null)
+            if (elem1 != null)
             {
                 try
                 {
-                    elem2 = doc.GetElement(sel.PickObject(ObjectType.Element, filterWithPipe, "Выберите элемент который будет являться осью вращения"));
+                    Reference select_2 = sel.PickObject(ObjectType.Element, filterWithPipe, "Выберите элемент который будет являться осью вращения");
+                    elem2 = doc.GetElement(select_2);
+                    point = select_2.GlobalPoint;
                     if (elem2 == null)
                     {
                         TaskDialog.Show("Ошибка", "Ось вращения не найдена");
@@ -60,14 +63,20 @@ namespace RotateElements
             }
             if (elem1 != null && elem2 != null)
             {
-                UserRotateElementsControl wpf = new UserRotateElementsControl(doc, elem1, elem2);
+                using (TransactionGroup transGroup = new TransactionGroup(doc))
+                {
+                    transGroup.Start("RotateElements");
 
-                wpf.ShowDialog();
+                    UserRotateElementsControl wpf = new UserRotateElementsControl(doc, elem1, elem2, point);
 
-                return Result.Succeeded;
+                    wpf.ShowDialog();
+
+                    transGroup.Assimilate();
+
+                    return Result.Succeeded;
+                }
             }
             return Result.Failed;
-
         }
     }
 }
