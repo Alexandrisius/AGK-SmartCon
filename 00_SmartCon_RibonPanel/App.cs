@@ -11,20 +11,23 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Windows;
+using UIFramework;
+using RibbonItem = Autodesk.Revit.UI.RibbonItem;
 #endregion
 
 namespace SmartCon
 {
     class App : IExternalApplication
     {
-        const string tab = "SmartCon";
+        const string _tab = "SmartCon";
 
         private readonly string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         public Result OnStartup(UIControlledApplication a)
         {
-            RibbonPanel ribbonPanel_PS = PipeSystemRibbonPanel(a);
-            RibbonPanel ribbonPanel_FM = FamlyManRibbonPanel(a);
+            Autodesk.Revit.UI.RibbonPanel ribbonPanel_PS = PipeSystemRibbonPanel(a);
+            Autodesk.Revit.UI.RibbonPanel ribbonPanel_FM = FamlyManRibbonPanel(a);
 
 
             #region CreateButtonPipeConnect
@@ -42,9 +45,19 @@ namespace SmartCon
             };
 
             PushButton button_Connect_1 = ribbonPanel_PS.AddItem(PBD_1) as PushButton;
-            button_Connect_1.Enabled = true;
-            #endregion
 
+            button_Connect_1.Enabled = true;
+
+            RibbonToolTip button_Connect_1_ToolTip = new RibbonToolTip()
+            {
+                Title = "Присоединение трубопроводных элементов.",
+                Content = "Присоединяет коннекторы компонентов трубопроводных систем. Базовым элементом является компонент который пользователь выбрал в первую очередь.",
+                ExpandedContent = "Обучающий ролик.",
+                ExpandedVideo = new Uri("P:/#Resources/02_Software/01_AutodeskRevit/2021/07_Plugins/PassatProjectPlugin/AGK_SmartCon/00_Code/AGK_SmartCon/00_SmartCon_RibonPanel/Resources/PipeCon_Movie.wmv"),
+            };
+            SetRibbonItemToolTip(button_Connect_1, button_Connect_1_ToolTip);
+
+            #endregion
 
             #region CreateButtonRotateElements
             Image LargeImageConnect_RE = Properties.Resources.RotatEl_32x32;
@@ -119,20 +132,20 @@ namespace SmartCon
             return largeImage;
         }
 
-        public RibbonPanel PipeSystemRibbonPanel(UIControlledApplication a)
+        public Autodesk.Revit.UI.RibbonPanel PipeSystemRibbonPanel(UIControlledApplication a)
         {
-            RibbonPanel ribbonPanel_PS = null;
+            Autodesk.Revit.UI.RibbonPanel ribbonPanel_PS = null;
             try
             {
-                a.CreateRibbonTab(tab);
+                a.CreateRibbonTab(_tab);
             }
             catch { }
             try
             {
-                RibbonPanel panel = a.CreateRibbonPanel(tab, "Pipe System");
+                Autodesk.Revit.UI.RibbonPanel panel = a.CreateRibbonPanel(_tab, "Pipe System");
             }
             catch { }
-            List<RibbonPanel> panels = a.GetRibbonPanels(tab);
+            List<Autodesk.Revit.UI.RibbonPanel> panels = a.GetRibbonPanels(_tab);
             foreach (var p in panels)
             {
                 if (p.Name == "Pipe System")
@@ -144,16 +157,16 @@ namespace SmartCon
             return ribbonPanel_PS;
         }
 
-        public RibbonPanel FamlyManRibbonPanel(UIControlledApplication a)
+        public Autodesk.Revit.UI.RibbonPanel FamlyManRibbonPanel(UIControlledApplication a)
         {
-            RibbonPanel ribbonPanel_FM = null;
+            Autodesk.Revit.UI.RibbonPanel ribbonPanel_FM = null;
 
             try
             {
-                RibbonPanel panel = a.CreateRibbonPanel(tab, "Family Manager");
+                Autodesk.Revit.UI.RibbonPanel panel = a.CreateRibbonPanel(_tab, "Family Manager");
             }
             catch { }
-            List<RibbonPanel> panels = a.GetRibbonPanels(tab);
+            List<Autodesk.Revit.UI.RibbonPanel> panels = a.GetRibbonPanels(_tab);
             foreach (var p in panels)
             {
                 if (p.Name == "Family Manager")
@@ -163,6 +176,44 @@ namespace SmartCon
             }
             return ribbonPanel_FM;
         }
+
+        public BitmapImage GetBitmapImage(string imagePath)
+        {
+            if (File.Exists(imagePath))
+                return new BitmapImage(new Uri(imagePath));
+            else
+                return null;
+        }
+        
+
+        void SetRibbonItemToolTip(RibbonItem item, RibbonToolTip toolTip)
+        {
+            var ribbonItem = GetRibbonItem(item);
+            if (ribbonItem == null)
+                return;
+            ribbonItem.ToolTip = toolTip;
+        }
+
+
+        public Autodesk.Windows.RibbonItem GetRibbonItem(RibbonItem item)
+        {
+            RibbonControl ribbonControl = RevitRibbonControl.RibbonControl;
+
+            foreach (var tab in ribbonControl.Tabs)
+            {
+                foreach (var panel in tab.Panels)
+                {
+                    foreach (var ribbonItem in panel.Source.Items)
+                    {
+                        if (ribbonItem.AutomationName == item.Name)
+                            return ribbonItem as Autodesk.Windows.RibbonItem;
+                    }
+                }
+            }
+
+            return null;
+        }
+
 
         public Result OnShutdown(UIControlledApplication a)
         {
