@@ -24,8 +24,20 @@ namespace LossTemp
             Document doc = uidoc.Document;
             Selection sel = uiapp.ActiveUIDocument.Selection;
 
+            Connector con1 = PointOriginConnectors.GetConnector(sel, doc);
+            if (con1 == null)
+            {
+                TaskDialog.Show("Ошибка", "Первый объект не найден");
+                return Result.Failed;
+            }
+            Connector con2 = PointOriginConnectors.GetConnector(sel, doc);
+            if (con2 == null)
+            {
+                TaskDialog.Show("Ошибка", "Второй объект не найден");
+                return Result.Failed;
+            }
 
-
+            List<List<ElementId>> lst = Iterator.GetCircuit(con1, con2);
 
 
 

@@ -36,7 +36,7 @@ namespace SmartCon
             Image imageConnect = Properties.Resources.PipeCon_16х16;
             ImageSource imageConnectSource = GetImageSource(imageConnect);
 
-            PushButtonData PBD_1 = new PushButtonData("Pipe Connect", "Pipe Connect", this.path + "\\PipeConnect.dll", "PipeConnect.StartPlugin")
+            PushButtonData PBD_1 = new PushButtonData("Pipe Connect", "Pipe\nConnect", this.path + "\\PipeConnect.dll", "PipeConnect.StartPlugin")
             {
                 ToolTip = "Присоединение трубопроводных элементов.",
                 LongDescription = "Присоединяет коннекторы компонентов трубопроводных систем. Базовым элементом является компонент который пользователь выбрал в первую очередь. ",
@@ -84,7 +84,7 @@ namespace SmartCon
             Image imageConnect_RE = Properties.Resources.RotatEl_16x16;
             ImageSource imageConnectSource_RE = GetImageSource(imageConnect_RE);
 
-            PushButtonData PBD_RE = new PushButtonData("Rotate Elements", "Rotate Elements", this.path + "\\RotateElements.dll", "RotateElements.StartPlugin")
+            PushButtonData PBD_RE = new PushButtonData("Rotate Elements", "Rotate\nElements", this.path + "\\RotateElements.dll", "RotateElements.StartPlugin")
             {
                 ToolTip = "Вращает элементы вокруг оси выбранного коннектора.",
                 LongDescription = "Вращает элементы вокруг оси выбранного коннектора со всеми присоединёнными к нему элементами. ",
@@ -102,7 +102,7 @@ namespace SmartCon
             Image imageConnect_AE = Properties.Resources.AlignEl_16x16;
             ImageSource imageConnectSource_AE = GetImageSource(imageConnect_AE);
 
-            PushButtonData PBD_AE = new PushButtonData("Align Elements", "Align Elements", this.path + "\\AlignElements.dll", "AlignElements.StartPlugin")
+            PushButtonData PBD_AE = new PushButtonData("Align Elements", "Align\nElements", this.path + "\\AlignElements.dll", "AlignElements.StartPlugin")
             {
                 ToolTip = "Выравнивает элементы по оси выбранного коннектора.",
                 LongDescription = "Выравнивает элементы по оси выбранного коннектора со всеми присоединёнными к нему элементами. ",
@@ -114,13 +114,31 @@ namespace SmartCon
             button_Connect_AE.Enabled = true;
             #endregion
 
+            #region CreateButtonLossTemp
+            Image LargeImageConnect_LT = Properties.Resources.LossTemp_32x32;
+            ImageSource largeImageConnectSaSource_LT = GetImageSource(LargeImageConnect_LT);
+            Image imageConnect_LT = Properties.Resources.LossTemp_16x16;
+            ImageSource imageConnectSource_LT = GetImageSource(imageConnect_LT);
+
+            PushButtonData PBD_LT = new PushButtonData("Loss Temperature", "Loss\nTemperature", this.path + "\\LossTemp.dll", "LossTemp.StartPlugin")
+            {
+                ToolTip = "Вычисляет потерю температуры теплоносителя.",
+                LongDescription = "Вычисляет потерю температуры теплоносителя по длине трубы. ",
+                Image = imageConnectSource_LT,
+                LargeImage = largeImageConnectSaSource_LT
+            };
+
+            PushButton button_Connect_LT = ribbonPanel_PS.AddItem(PBD_LT) as PushButton;
+            button_Connect_LT.Enabled = true;
+            #endregion
+
             #region CreateButtonFamilyMan
             Image LargeImageConnect_2 = Properties.Resources.FamilyMan_32х32;
             ImageSource largeImageConnectSaSource_2 = GetImageSource(LargeImageConnect_2);
             Image imageConnect_2 = Properties.Resources.FamilyMan_16х16;
             ImageSource imageConnectSource_2 = GetImageSource(imageConnect_2);
 
-            PushButtonData PBD_2 = new PushButtonData("Family Manager", "Family Manager", this.path + "\\FamilyManager.dll", "FamilyManager.StartPlugin")
+            PushButtonData PBD_2 = new PushButtonData("Family Manager", "Family\nManager", this.path + "\\FamilyManager.dll", "FamilyManager.StartPlugin")
             {
                 ToolTip = "Менеджер семейств.",
                 LongDescription = "Система менеджмента элементов модели. ",

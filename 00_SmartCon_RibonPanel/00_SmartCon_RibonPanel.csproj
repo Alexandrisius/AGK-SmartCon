@@ -105,5 +105,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\PipeCon_Movie.wmv" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LossTemp_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LossTemp_32x32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
