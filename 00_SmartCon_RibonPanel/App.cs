@@ -48,12 +48,31 @@ namespace SmartCon
 
             button_Connect_1.Enabled = true;
 
+            var tempPath = Path.Combine(Path.GetTempPath(),
+                "SmartCon.Resources.PipeCon_Movie.wmv");
+
+            using (Stream stream = Assembly
+                .GetExecutingAssembly()
+                .GetManifestResourceStream(
+                    "SmartCon.Resources.PipeCon_Movie.wmv"))
+            {
+                var buffer = new byte[stream.Length];
+
+                stream.Read(buffer, 0, buffer.Length);
+
+                using (FileStream fs = new FileStream(
+                    tempPath, FileMode.Create, FileAccess.Write))
+                {
+                    fs.Write(buffer, 0, buffer.Length);
+                }
+            }
+
             RibbonToolTip button_Connect_1_ToolTip = new RibbonToolTip()
             {
                 Title = "Присоединение трубопроводных элементов.",
                 Content = "Присоединяет коннекторы компонентов трубопроводных систем. Базовым элементом является компонент который пользователь выбрал в первую очередь.",
                 ExpandedContent = "Обучающий ролик.",
-                ExpandedVideo = new Uri("P:/#Resources/02_Software/01_AutodeskRevit/2021/07_Plugins/PassatProjectPlugin/AGK_SmartCon/00_Code/AGK_SmartCon/00_SmartCon_RibonPanel/Resources/PipeCon_Movie.wmv"),
+                ExpandedVideo = new Uri(tempPath),
             };
             SetRibbonItemToolTip(button_Connect_1, button_Connect_1_ToolTip);
 

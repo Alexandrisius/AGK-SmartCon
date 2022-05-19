@@ -102,5 +102,8 @@
   <ItemGroup>
     <None Include="SmartCon.addin" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\PipeCon_Movie.wmv" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
