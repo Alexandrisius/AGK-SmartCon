@@ -22,14 +22,16 @@ namespace PipeConnect
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
             Selection sel = uiapp.ActiveUIDocument.Selection;
-
-            Connector con1 = PointOriginConnectors.GetConnector(sel, doc);
+            Connector conDetector = null;//временный коннектор чтобы нельзя было выбрать один и тотже элемент
+            Connector con1 = PointOriginConnectors.GetConnector(sel, doc, conDetector);
             if (con1 == null)
             {
+                
                 TaskDialog.Show("Ошибка", "Первый объект не найден");
                 return Result.Failed;
             }
-            Connector con2 = PointOriginConnectors.GetConnector(sel, doc);
+            conDetector = con1;
+            Connector con2 = PointOriginConnectors.GetConnector(sel, doc, conDetector);
             if (con2 == null)
             {
                 TaskDialog.Show("Ошибка", "Второй объект не найден");
@@ -87,7 +89,7 @@ namespace PipeConnect
                         ElementTransformUtils.RotateElements(doc, elementIds, line, angle2);
                     }
 
-                    ConnectElement.ConnectTo(con1, con2);
+                    
                     tx.Commit();
                 }
 
@@ -115,6 +117,8 @@ namespace PipeConnect
                         {
                             ElementTransformUtils.RotateElement(doc, con1.Owner.Id, lineZ, -angle3 * 2);//если угол не стал 0 то поворот против часовой
                         }
+
+                        
                     }
                     tx.Commit();
                 }

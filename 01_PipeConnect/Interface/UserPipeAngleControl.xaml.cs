@@ -100,7 +100,8 @@ namespace PipeConnect
 
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            
+            ConnectElement.ConnectTo(_con1, _con2, _doc);
+
             this.Close();
         }
 
@@ -139,5 +140,11 @@ namespace PipeConnect
 
             }
         }
+
+        private void Button_Reflex(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

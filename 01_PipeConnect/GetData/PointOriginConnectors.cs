@@ -15,13 +15,12 @@ namespace PipeConnect
         /// <param name="str"></param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentException"></exception>
-        public static Connector GetConnector(Selection sel, Document doc)
+        public static Connector GetConnector(Selection sel, Document doc, Connector connector)
         {
             double length = double.MaxValue;
-            Connector connector = null;
             Reference reference = null;
             XYZ point = null;
-            SelectionFilterUnusedCon filterUnusedCon = new SelectionFilterUnusedCon();
+            SelectionFilterUnusedCon filterUnusedCon = new SelectionFilterUnusedCon(connector);
             try
             {
                 reference = sel.PickObject(ObjectType.Element, filterUnusedCon, "Выберите элемент для присоединения");

@@ -46,5 +46,10 @@ namespace PipeConnect
             }
 
         }
+
+        public static void TurnAround(Document doc, Connector con1)
+        {
+
+        }
     }
 }
