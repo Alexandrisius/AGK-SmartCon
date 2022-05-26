@@ -5,38 +5,37 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PipeConnect"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="450" Title="Pipe Connect" MaxHeight="250" MaxWidth="450" MinWidth="450" MinHeight="250" Background="#FFB9B9B9" WindowStyle="ThreeDBorderWindow">
+             d:DesignHeight="270" d:DesignWidth="450" Title="Pipe Connect" MaxHeight="270" MaxWidth="450" MinWidth="450" MinHeight="270" Background="#FFB9B9B9" WindowStyle="ThreeDBorderWindow">
     <Grid>
-        <TextBox x:Name="AngleText" HorizontalAlignment="Center" Margin="181,33,181,0" TextWrapping="Wrap" Text="45" VerticalAlignment="Top" Width="80" Height="45" TextAlignment="Center" FontSize="20" MaxLines="360" MaxLength="3" VerticalContentAlignment="Center" TextChanged="AngleText_TextChanged" Background="#FFDDDDDD"/>
-        <Button x:Name="Left" Content="↺" HorizontalAlignment="Left" Margin="30,33,0,0" VerticalAlignment="Top" Width="70" Click="Button_Left" Height="45" FontSize="20" KeyDown="Button_KeyDown_Left" Cursor="Hand">
-        </Button>
-        <Button x:Name="Right" Content="↻" HorizontalAlignment="Right" Margin="0,33,30,0" VerticalAlignment="Top" RenderTransformOrigin="0,-0.599" Width="70" BorderThickness="1,1,1,1" Click="Button_Right" Height="45" FontSize="20" KeyDown="Button_KeyDown_Right" Cursor="Hand">
-        </Button>
-        <Label Content="Введите угол поворота" HorizontalAlignment="Center" Margin="131,0" VerticalAlignment="Top" Width="180" Height="31" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        <ComboBox x:Name="Box" HorizontalAlignment="Left" Margin="30,180,0,0" VerticalAlignment="Top" Width="118" IsSynchronizedWithCurrentItem="True" Cursor="Hand" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="AngleText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="45" VerticalAlignment="Center" Width="80" Height="45" TextAlignment="Center" FontSize="20" MaxLines="360" MaxLength="3" VerticalContentAlignment="Center" TextChanged="AngleText_TextChanged" Background="#FFDDDDDD" Grid.Row="1" Grid.Column="1"/>
+        <Button x:Name="Left" Content="↺" HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" Click="Button_Left" Height="45" FontSize="20" KeyDown="Button_KeyDown_Left" Cursor="Hand" Grid.Row="1"/>
+        <Button x:Name="Right" Content="↻" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0,-0.599" Width="70" BorderThickness="1,1,1,1" Click="Button_Right" Height="45" FontSize="20" KeyDown="Button_KeyDown_Right" Cursor="Hand" Grid.Row="1" Grid.Column="2"/>
+        <Label Content="Введите угол поворота" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="180" Height="31" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="3" Margin="0,0,0,0"/>
+        <ComboBox x:Name="Box" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="130" IsSynchronizedWithCurrentItem="True" Cursor="Hand" Grid.Row="4" Height="22" Margin="0,0,0,15" >
             <ComboBoxItem Content="Вверх слева"/>
             <ComboBoxItem Content="Вверх справа"/>
             <ComboBoxItem Content="Вниз справа"/>
             <ComboBoxItem Content="Вниз слева"/>
         </ComboBox>
-        <TextBox x:Name="SlopeText"  HorizontalAlignment="Center" Margin="171,180,226,0" TextWrapping="Wrap" Text="40 " VerticalAlignment="Top" Width="45" Height="22" MaxLength="4" TextChanged="SlopeText_TextChanged" TextAlignment="Center" MaxLines="9999" Background="#FFDDDDDD" VerticalContentAlignment="Center"/>
-        <Button x:Name="ok_button" Content="OK" HorizontalAlignment="Left" Margin="360,180,0,0" VerticalAlignment="Top" Height="22" Width="50" Click="Ok_Click" IsDefault="True" Cursor="Hand" >
+        <TextBox x:Name="SlopeText"  HorizontalAlignment="Left" Margin="15,0,0,15" TextWrapping="Wrap" Text="40 " VerticalAlignment="Bottom" Width="50" Height="22" MaxLength="4" TextChanged="SlopeText_TextChanged" TextAlignment="Center" MaxLines="9999" Background="#FFDDDDDD" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="1"/>
+        <Button x:Name="ok_button" Content="OK" HorizontalAlignment="Center" VerticalAlignment="Center" Height="34" Width="70" Click="Ok_Click" IsDefault="True" Cursor="Hand" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" />
+        <Label Content="Введите необходимый уклон трубы для моделирования после отвода" Width="450" Foreground="Black" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FFA4A4A4" Grid.Row="3" Grid.ColumnSpan="3" Margin="0,0,0,0"/>
+        <Label Content="Уклон мм/м.п." HorizontalAlignment="Center" VerticalAlignment="Top" Width="280" Height="26" VerticalContentAlignment="Center" FontWeight="Normal" HorizontalContentAlignment="Center" Grid.Row="4" Grid.ColumnSpan="2"/>
+        <Button Content="Уклон" HorizontalAlignment="Left" Margin="85,0,0,15" VerticalAlignment="Bottom" Width="50" Height="22" Click="Slope_Click" Cursor="Hand" Grid.Row="4" Grid.Column="1">
         </Button>
-        <Label Content="Введите необходимый уклон трубы для моделирования после отвода" HorizontalAlignment="Center" VerticalAlignment="Top" Width="442" Height="25" Foreground="Black" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FFA4A4A4" Margin="0,134,0,0"/>
-        <Label Content="Уклон мм/м.п." HorizontalAlignment="Center" Margin="133,154,189,0" VerticalAlignment="Top" Width="120" Height="30" VerticalContentAlignment="Center" FontWeight="Normal" HorizontalContentAlignment="Center"/>
-        <Button Content="Уклон" HorizontalAlignment="Left" Margin="241,180,0,0" VerticalAlignment="Top" Width="43" Height="22" Click="Slope_Click" Cursor="Hand">
-            <!--<Button.Template >
-                <ControlTemplate TargetType="{x:Type Button}" >
-                    <Border BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="1" CornerRadius="5,5,5,5">
-                        <Border.Background>#FFDDDDDD</Border.Background>
-                        <ContentPresenter Content="{TemplateBinding ContentControl.Content}" HorizontalAlignment="Center" VerticalAlignment="Center" ></ContentPresenter>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>-->
-        </Button>
-        <Button Content="Изменить" HorizontalAlignment="Center" Margin="181,88,181,85" VerticalAlignment="Center" Width="80" Height="46" Click="Button_Reflex" Cursor="Hand">
-
-        </Button>
+        <Button Content="Изменить" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Height="46" Click="Button_Reflex" Cursor="Hand" Grid.Row="2" Grid.Column="1"/>
 
 
     </Grid>

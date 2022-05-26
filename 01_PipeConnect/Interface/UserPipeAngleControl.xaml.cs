@@ -143,7 +143,7 @@ namespace PipeConnect
 
         private void Button_Reflex(object sender, RoutedEventArgs e)
         {
-
+            TurnByClick.TurnAroundAxis(_doc, _con1, _con2);
         }
 
     }

@@ -14,12 +14,12 @@ namespace PipeConnect
 
         public bool AllowElement(Element elem)
         {
-            if (SelectionUnusedConnectors.GetUnusedConnectors(elem) & con == null)
+            if (SelectionUnussedConnectors.GetUnussedConnectors(elem) & con == null)
             {
                 return true;
             }
 
-            if (SelectionUnusedConnectors.GetUnusedConnectors(elem) & con.Owner.Id != elem.Id)
+            if (SelectionUnussedConnectors.GetUnussedConnectors(elem) & con.Owner.Id != elem.Id)
             {
                 return true;
             }

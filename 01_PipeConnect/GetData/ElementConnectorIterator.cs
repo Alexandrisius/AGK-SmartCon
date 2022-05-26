@@ -62,5 +62,11 @@ namespace PipeConnect
 
             return null;
         }
+
+        public static ICollection<Connector> GetFreeConnectors(Connector connector)
+        {
+            return null;
+        }
+
     }
 }

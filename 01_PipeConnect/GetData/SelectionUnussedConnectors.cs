@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace PipeConnect
 {
-    public class SelectionUnusedConnectors
+    public class SelectionUnussedConnectors
     {
-        public static bool GetUnusedConnectors(Element elem)
+        public static bool GetUnussedConnectors(Element elem)
         {
             if (elem is FamilyInstance family)
             {
