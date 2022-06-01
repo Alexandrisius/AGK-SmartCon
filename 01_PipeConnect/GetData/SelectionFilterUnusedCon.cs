@@ -19,7 +19,7 @@ namespace PipeConnect
                 return true;
             }
 
-            if (SelectionUnussedConnectors.GetUnussedConnectors(elem) & con.Owner.Id != elem.Id)
+            else if (SelectionUnussedConnectors.GetUnussedConnectors(elem) & con?.Owner.Id != elem.Id)
             {
                 return true;
             }

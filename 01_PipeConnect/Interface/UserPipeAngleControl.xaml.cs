@@ -27,14 +27,16 @@ namespace PipeConnect
         public string prevTextBox2 = "";
         public int prevIndexTextbox2 = 0;
         Document _doc;
-        Connector _con1;
-        Connector _con2;
+        Connector _con1;//Перемещаемый элемент
+        Connector _con2;//Статичный элемент
+        TransactionGroup _transGroup;
 
-        public UserPipeAngleControl(Document doc, Connector con1, Connector con2)
+        public UserPipeAngleControl(Document doc, Connector con1, Connector con2, TransactionGroup transGroup)
         {
             _doc = doc;
             _con1 = con1;
             _con2 = con2;
+            _transGroup = transGroup;
             InitializeComponent();
         }
 
@@ -102,6 +104,10 @@ namespace PipeConnect
         {
             ConnectElement.ConnectTo(_con1, _con2, _doc);
 
+            if (_transGroup.GetStatus() == TransactionStatus.Started)
+            {
+                _transGroup.Assimilate();
+            }
             this.Close();
         }
 
@@ -109,8 +115,8 @@ namespace PipeConnect
         {
             int typeBoxItem = Box.SelectedIndex;
 
-            SlopePipeFiting.SlopePipe(_doc, _con1,typeBoxItem, Double.Parse(SlopeText.Text));
-
+            SlopePipeFiting.SlopePipe(_doc, _con1, typeBoxItem, Double.Parse(SlopeText.Text));
+           
             this.Close();
 
         }
@@ -141,10 +147,22 @@ namespace PipeConnect
             }
         }
 
+        List<Connector> freeCon = new List<Connector>();
+
         private void Button_Reflex(object sender, RoutedEventArgs e)
         {
-            TurnByClick.TurnAroundAxis(_doc, _con1, _con2);
+            TurnByClick.TurnAroundAxis(_doc, _con1, _con2, out Connector used, freeCon);
+            freeCon.Add(used);
+            _con1 = used;
         }
 
+        private void WPF_Closed(object sender, EventArgs e)
+        {
+            if (_transGroup.GetStatus() == TransactionStatus.Started)
+            {
+                _transGroup.RollBack();
+            }
+            
+        }
     }
 }

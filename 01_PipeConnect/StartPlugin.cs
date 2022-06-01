@@ -122,12 +122,15 @@ namespace PipeConnect
                     }
                     tx.Commit();
                 }
-                UserPipeAngleControl upc = new UserPipeAngleControl(doc, con1, con2);
+                UserPipeAngleControl upc = new UserPipeAngleControl(doc, con1, con2, transGroup);
 
                 upc.ShowDialog();
 
-
-                transGroup.Assimilate();
+                if (transGroup.GetStatus() == TransactionStatus.Started)
+                {
+                    transGroup.Assimilate();
+                }
+                
                 return Result.Succeeded;
             }
 

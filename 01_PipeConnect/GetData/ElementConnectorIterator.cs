@@ -65,7 +65,18 @@ namespace PipeConnect
 
         public static ICollection<Connector> GetFreeConnectors(Connector connector)
         {
-            return null;
+            ICollection<Connector>freeCon = new List<Connector>();
+
+            ConnectorSet connectorSet = GetConnectorSet(connector.Owner);
+            foreach (Connector con in connectorSet)
+            {
+                if (!con.IsConnected)
+                {
+                    freeCon.Add(con);
+                }
+            }
+
+            return freeCon;
         }
 
     }
