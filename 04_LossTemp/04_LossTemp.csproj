@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetData\GetHeatingDevice.cs" />
     <Compile Include="GetData\Iterator.cs" />
     <Compile Include="GetData\PointOriginConnectors.cs" />
     <Compile Include="StartPlugin.cs" />

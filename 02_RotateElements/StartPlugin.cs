@@ -45,7 +45,7 @@ namespace RotateElements
             {
                 try
                 {
-                    Reference select_2 = sel.PickObject(ObjectType.Element, filterWithPipe, "Выберите элемент который будет являться осью вращения");
+                    Reference select_2 = sel.PickObject(ObjectType.Element, filterWithPipe, "Выберите коннектор который будет являться осью вращения");
                     elem2 = doc.GetElement(select_2);
                     point = select_2.GlobalPoint;
                     if (elem2 == null)

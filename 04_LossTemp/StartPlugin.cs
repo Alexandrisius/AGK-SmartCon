@@ -37,8 +37,9 @@ namespace LossTemp
                 return Result.Failed;
             }
 
-            List<List<ElementId>> lst = Iterator.GetCircuit(con1, con2);
+            ICollection<ICollection<ElementId>> lst = Iterator.GetCircuit(doc,con1, con2, GetInfoSystem.GetRadiator(doc));
 
+            
 
 
             return Result.Succeeded;

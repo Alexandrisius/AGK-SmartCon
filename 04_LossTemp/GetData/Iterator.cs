@@ -9,7 +9,7 @@ namespace LossTemp
 {
     class Iterator
     {
-        public static List<List<ElementId>> GetCircuit(Connector con1, Connector con2)
+        public static ICollection<ICollection<ElementId>> GetCircuit(Document doc, Connector con1, Connector con2, List<Element> listRadiators)
         {
             ICollection<ElementId> listElements = new List<ElementId>();
 
@@ -23,20 +23,9 @@ namespace LossTemp
                 {
                     if (csi.Current is Connector connector)
                     {
-                        if (!listElements.Contains(connector.Owner.Id))
-                        {
-                            listElements.Add(connector.Owner.Id);
-                        }
-                        ConnectorSet conSet = connector.AllRefs;
+                        
 
-                        foreach (Connector elemCon in conSet)
-                        {
-                            if (!listElements.Contains(elemCon.Owner.Id) && GetConnectorSet(elemCon.Owner) != null
-                                                                         && elemCon.Owner.Id != con2.Owner.Id)
-                            {
-                                csi = GetConnectorSet(elemCon.Owner).ForwardIterator();
-                            }
-                        }
+
                     }
                 }
             }
