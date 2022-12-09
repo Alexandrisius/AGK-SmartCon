@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,45 +17,53 @@ namespace RotateElements
         public int prevIndexTextbox2 = 0;
         Document _doc;
         Element _elem1;
-        Element _elem2;
-        XYZ _point;
+        Line _lineZ;
+        ICollection<ElementId> _elemId = null;
+        Connector connector;
 
-        public UserRotateElementsControl(Document doc, Element elem1, Element elem2, XYZ point)
+        public UserRotateElementsControl(Document doc, Element elemForRotate, XYZ clickPoint)
         {
             _doc = doc;
-            _elem1 = elem1;
-            _elem2 = elem2;
-            _point = point;
+            _elem1 = elemForRotate;
+            _lineZ = ConnectorCalculator.GetAxisByTwoElements(elemForRotate, clickPoint, out connector);
+            
             InitializeComponent();
         }
+
 
         private void Button_Left(object sender, RoutedEventArgs e)
         {
             if (Check.IsChecked == true)
             {
-                Rotater.TurnLeft(_doc, _elem1, _elem2, Double.Parse(AngleText.Text), 1, _point);
+                if (_elemId == null)
+                {
+                    _elemId = Iterator.GetElements(_doc, _elem1, connector);
+                }
+                Rotater.TurnLeft(_doc, _lineZ, Double.Parse(AngleText.Text), _elem1, _elemId, 1);
             }
             else
             {
-                Rotater.TurnLeft(_doc, _elem1, _elem2, Double.Parse(AngleText.Text), 2, _point);
+                Rotater.TurnLeft(_doc, _lineZ, Double.Parse(AngleText.Text), _elem1, _elemId, 2);
 
             }
-
         }
 
         private void Button_Right(object sender, RoutedEventArgs e)
         {
             if (Check.IsChecked == true)
             {
-                Rotater.TurnRight(_doc, _elem1, _elem2, Double.Parse(AngleText.Text),1, _point);
+                if (_elemId == null)
+                {
+                    _elemId = Iterator.GetElements(_doc, _elem1, connector);
+                }
+                Rotater.TurnRight(_doc, _lineZ, Double.Parse(AngleText.Text), _elem1, _elemId, 1);
             }
             else
             {
-                Rotater.TurnRight(_doc, _elem1, _elem2, Double.Parse(AngleText.Text), 2, _point);
+                Rotater.TurnRight(_doc, _lineZ, Double.Parse(AngleText.Text), _elem1, _elemId, 2);
 
             }
         }
-
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
 

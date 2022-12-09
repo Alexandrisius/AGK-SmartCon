@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PipeConnect"
              mc:Ignorable="d" 
-             d:DesignHeight="270" d:DesignWidth="450" Title="Pipe Connect" MaxHeight="270" MaxWidth="450" MinWidth="450" MinHeight="270" Background="#FFB9B9B9" WindowStyle="ThreeDBorderWindow" Closed="WPF_Closed">
+             d:DesignHeight="270" d:DesignWidth="450" Title="Pipe Connect" MaxHeight="270" MaxWidth="450" MinWidth="450" MinHeight="270" Background="#FFB9B9B9" WindowStyle="ThreeDBorderWindow" Closed="WPF_Closed" Topmost="True">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>

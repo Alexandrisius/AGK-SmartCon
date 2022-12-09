@@ -1,54 +1,35 @@
 ﻿using Autodesk.Revit.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RotateElements
 {
     internal class ConnectorCalculator
     {
-        public static Line GetAxisByTwoElements(Element elem1, Element elem_2, XYZ point)
+        public static Line GetAxisByTwoElements(Element elemForRotate, XYZ clickPoint, out Connector ref_connector)
         {
             double length = double.MaxValue;
+            ref_connector = null;
             Connector connector = null;
 
-            if (elem_2 is MEPCurve elemPipe)
-            {
-                ConnectorSet list = elemPipe.ConnectorManager.Connectors;
-                foreach (Connector item in list)
-                {
-                        if (item.Origin.DistanceTo(point) < length)
-                        {
-                            length = item.Origin.DistanceTo(point);
-
-                            connector = item;
-                        }
-                }
-
-                return Line.CreateBound(connector.Origin,
-                                            connector.Origin + connector.CoordinateSystem.BasisZ);
-            }
-
-            if (elem_2 is FamilyInstance family)
+            if (elemForRotate is FamilyInstance family)
             {
                 ConnectorSet list = family.MEPModel.ConnectorManager.Connectors;
                 foreach (Connector item in list)
                 {
-                   
-                        if (item.Origin.DistanceTo(point) < length)
+
+                    if (item.Origin.DistanceTo(clickPoint) < length)
+                    {
+                        length = item.Origin.DistanceTo(clickPoint);
+                        connector = item;
+                        ConnectorSet conSet = connector.AllRefs;
+                        foreach (Connector refcon in conSet)
                         {
-                            length = item.Origin.DistanceTo(point);
-                            connector = item;
+                            ref_connector = refcon;
                         }
+                    }
                 }
             }
 
-            return Line.CreateBound(connector.Origin,
-                                            connector.Origin + connector.CoordinateSystem.BasisZ);
-
-            return null;
+            return Line.CreateBound(connector.Origin, connector.Origin + connector.CoordinateSystem.BasisZ);
         }
     }
 }

@@ -129,7 +129,7 @@ namespace SmartCon
             };
 
             PushButton button_Connect_LT = ribbonPanel_PS.AddItem(PBD_LT) as PushButton;
-            button_Connect_LT.Enabled = true;
+            button_Connect_LT.Enabled = false;
             #endregion
 
             #region CreateButtonFamilyMan
@@ -147,7 +147,7 @@ namespace SmartCon
             };
 
             PushButton button_Connect_2 = ribbonPanel_FM.AddItem(PBD_2) as PushButton;
-            button_Connect_2.Enabled = true;
+            button_Connect_2.Enabled = false;
             #endregion
 
             return Result.Succeeded;

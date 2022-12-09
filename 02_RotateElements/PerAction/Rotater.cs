@@ -9,12 +9,9 @@ namespace RotateElements
 {
     internal class Rotater
     {
-        public static void TurnRight(Document doc, Element elem1, Element elem2, double angle, int type, XYZ point)
+        public static void TurnRight(Document doc, Line lineZ, double angle, Element elemForRotate,ICollection<ElementId> elemId,int type)
         {
-            ICollection<ElementId> elemId = Iterator.GetElements(elem1, elem2);
-
-            Line lineZ = ConnectorCalculator.GetAxisByTwoElements(elem1, elem2, point);
-
+           
             using (var tx = new Transaction(doc))
             {
                 tx.Start("TurnRight");
@@ -26,25 +23,21 @@ namespace RotateElements
                 }
                 if (angle != 0 && type == 2)
                 {
-                    ElementTransformUtils.RotateElement(doc, elem1.Id, lineZ, angle * Math.PI / 180);
+                    ElementTransformUtils.RotateElement(doc, elemForRotate.Id, lineZ, angle * Math.PI / 180);
 
                 }
 
                 tx.Commit();
             }
+            
 
 
         }
-        public static void TurnLeft(Document doc, Element elem1, Element elem2, double angle, int type, XYZ point)
+        public static void TurnLeft(Document doc, Line lineZ, double angle, Element elemForRotate, ICollection<ElementId> elemId,int type)
         {
-            ICollection<ElementId> elemId = Iterator.GetElements(elem1, elem2);
-
-            Line lineZ = ConnectorCalculator.GetAxisByTwoElements(elem1, elem2, point);
-
             using (var tx = new Transaction(doc))
             {
                 tx.Start("TurnLeft");
-
 
                 if (angle != 0 && type == 1)
                 {
@@ -53,7 +46,7 @@ namespace RotateElements
                 }
                 if (angle != 0 && type == 2)
                 {
-                    ElementTransformUtils.RotateElement(doc, elem1.Id, lineZ, -angle * Math.PI / 180);
+                    ElementTransformUtils.RotateElement(doc, elemForRotate.Id, lineZ, -angle * Math.PI / 180);
 
                 }
 
