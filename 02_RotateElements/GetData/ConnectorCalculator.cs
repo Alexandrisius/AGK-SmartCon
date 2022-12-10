@@ -4,10 +4,10 @@ namespace RotateElements
 {
     internal class ConnectorCalculator
     {
-        public static Line GetAxisByTwoElements(Element elemForRotate, XYZ clickPoint, out Connector ref_connector)
+        public static Line GetAxisByTwoElements(Element elemForRotate, XYZ clickPoint, out Connector refConnector)
         {
             double length = double.MaxValue;
-            ref_connector = null;
+            refConnector = null;
             Connector connector = null;
 
             if (elemForRotate is FamilyInstance family)
@@ -23,13 +23,13 @@ namespace RotateElements
                         ConnectorSet conSet = connector.AllRefs;
                         foreach (Connector refcon in conSet)
                         {
-                            ref_connector = refcon;
+                            refConnector = refcon;
                         }
                     }
                 }
             }
 
-            return Line.CreateBound(connector.Origin, connector.Origin + connector.CoordinateSystem.BasisZ);
+            return Line.CreateBound(connector?.Origin, connector?.Origin + connector?.CoordinateSystem.BasisZ);
         }
     }
 }

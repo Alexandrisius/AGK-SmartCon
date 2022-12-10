@@ -21,7 +21,7 @@ namespace RotateElements
             Filter filter = new Filter();
 
             Element elemForRotate;
-            XYZ clickPoint = null;
+            XYZ clickPoint;
             try
             {
                 elemForRotate = doc.GetElement(sel.PickObject(ObjectType.Element, filter, "Выберите элемент который необходимо повернуть"));
@@ -36,37 +36,29 @@ namespace RotateElements
                 TaskDialog.Show("Внимание", "Объект для вращения не найден");
                 return Result.Failed;
             }
-            if (elemForRotate != null)
+
+            try
             {
-                try
-                {
-                    Reference select_2 = sel.PickObject(ObjectType.PointOnElement,"Выберите ближайшую точку к оси вокруг которой необходимо совершать врщение");
-                    clickPoint = select_2.GlobalPoint;
+                Reference select_2 = sel.PickObject(ObjectType.PointOnElement,"Выберите ближайшую точку к оси вокруг которой необходимо совершать врщение");
+                clickPoint = select_2.GlobalPoint;
                     
-                }
-                catch (Exception)
-                {
-                    TaskDialog.Show("Внимание", "Ось вращения не найдена");
-                    return Result.Failed;
-                }
-
             }
-            if (elemForRotate != null)
+            catch (Exception)
             {
-                using (TransactionGroup transGroup = new TransactionGroup(doc))
-                {
-                    transGroup.Start("RotateElements");
-
-                    UserRotateElementsControl wpf = new UserRotateElementsControl(doc, elemForRotate, clickPoint);
-
-                    wpf.ShowDialog();
-
-                    transGroup.Assimilate();
-
-                    return Result.Succeeded;
-                }
+                TaskDialog.Show("Внимание", "Ось вращения не найдена");
+                return Result.Failed;
             }
-            return Result.Failed;
+
+            using (TransactionGroup transGroup = new TransactionGroup(doc))
+            {
+                transGroup.Start("RotateElements");
+
+                UserRotateElementsControl wpf = new UserRotateElementsControl(doc, elemForRotate, clickPoint, transGroup);
+
+                wpf.ShowDialog();
+
+               return Result.Succeeded;
+            }
         }
     }
 }

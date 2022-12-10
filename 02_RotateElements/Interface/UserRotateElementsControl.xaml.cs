@@ -18,15 +18,17 @@ namespace RotateElements
         Document _doc;
         Element _elem1;
         Line _lineZ;
-        ICollection<ElementId> _elemId = null;
-        Connector connector;
+        ICollection<ElementId> _elemId;
+        readonly Connector connector;
+        TransactionGroup _transGroup;
 
-        public UserRotateElementsControl(Document doc, Element elemForRotate, XYZ clickPoint)
+        public UserRotateElementsControl(Document doc, Element elemForRotate, XYZ clickPoint, TransactionGroup tgGroup)
         {
             _doc = doc;
             _elem1 = elemForRotate;
             _lineZ = ConnectorCalculator.GetAxisByTwoElements(elemForRotate, clickPoint, out connector);
-            
+            _transGroup = tgGroup;
+
             InitializeComponent();
         }
 
@@ -97,7 +99,20 @@ namespace RotateElements
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (_transGroup.GetStatus() == TransactionStatus.Started)
+            {
+                _transGroup.Assimilate();
+            }
             this.Close();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (_transGroup.GetStatus() == TransactionStatus.Started)
+            {
+                _transGroup.RollBack();
+            }
+
         }
     }
 }

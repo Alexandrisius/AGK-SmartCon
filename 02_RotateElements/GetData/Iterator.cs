@@ -5,7 +5,7 @@ namespace RotateElements
 {
     class Iterator
     {
-        public static ICollection<ElementId> GetElements(Document doc, Element elem_ForRotate, Connector con_Axis)
+        public static ICollection<ElementId> GetElements(Document doc, Element elemForRotate, Connector conAxis)
         {
             ICollection<ElementId> listElements = new List<ElementId>();
 
@@ -13,118 +13,105 @@ namespace RotateElements
 
             List<int> countCon = new List<int>();
 
-            ConnectorSet connectorSet = GetConnectorSet(elem_ForRotate);
+            ConnectorSet connectorSet = GetConnectorSet(elemForRotate);
 
-            if (connectorSet != null)
+            if (connectorSet == null) return listElements;
+            ConnectorSetIterator csi = connectorSet.ForwardIterator();
+
+            while (csi.MoveNext())
             {
-                ConnectorSetIterator csi = connectorSet.ForwardIterator();
+                if (!(csi.Current is Connector connector)) continue;
+                int count = GetConnectorSet(connector.Owner, out int countUnused).Size;
 
-                while (csi.MoveNext())
+                if (count > 2 && !elemMoreTwoCon.Contains(connector.Owner.Id))
                 {
+                    elemMoreTwoCon.Add(connector.Owner.Id);
 
-                    if (csi.Current is Connector connector)
+                    countCon.Add(count - 2 - countUnused);
+                }
+
+                if (!listElements.Contains(connector.Owner.Id))
+                {
+                    listElements.Add(connector.Owner.Id);
+                }
+                ConnectorSet conSet = connector.AllRefs;
+
+                foreach (Connector elemCon in conSet)
+                {
+                    if (!listElements.Contains(elemCon.Owner.Id) && GetConnectorSet(elemCon.Owner) != null
+                                                                 && elemCon.Owner.Id != conAxis.Owner.Id)
                     {
-                        int countUnused;
-                        int count = GetConnectorSet(connector.Owner, out countUnused).Size;
+                        csi = GetConnectorSet(elemCon.Owner).ForwardIterator();
+                    }
 
-                        if (count > 2 && !elemMoreTwoCon.Contains(connector.Owner.Id))
+                }
+            }
+            for (int i = 0; i < elemMoreTwoCon.Count; i++)
+            {
+                ConnectorSet conSetGlobal = GetConnectorSet(doc.GetElement(elemMoreTwoCon[i]));
+
+                foreach (Connector connector in conSetGlobal)
+                {
+                    int x = 0;
+
+                    ConnectorSet conSet = connector.AllRefs;
+                    ConnectorSetIterator csi_3 = conSet.ForwardIterator();
+
+                    while (csi_3.MoveNext())
+                    {
+                        if (!(csi_3.Current is Connector elemCon)) continue;
+                        ConnectorSet cs = GetConnectorSet(elemCon.Owner, out int countUnused);
+                        int count = cs.Size;
+
+                        if (count > 2 && !elemMoreTwoCon.Contains(elemCon.Owner.Id))
                         {
-                            elemMoreTwoCon.Add(connector.Owner.Id);
-
+                            elemMoreTwoCon.Add(elemCon.Owner.Id);
                             countCon.Add(count - 2 - countUnused);
+
                         }
 
-                        if (!listElements.Contains(connector.Owner.Id))
-                        {
-                            listElements.Add(connector.Owner.Id);
-                        }
-                        ConnectorSet conSet = connector.AllRefs;
+                        ConnectorSet conSet_2 = elemCon.AllRefs;
 
-                        foreach (Connector elemCon in conSet)
+                        foreach (Connector item in conSet_2)
                         {
-                            if (!listElements.Contains(elemCon.Owner.Id) && GetConnectorSet(elemCon.Owner) != null
-                                && elemCon.Owner.Id != con_Axis.Owner.Id)
+                            if (item.Owner.Id == elemMoreTwoCon[i])
                             {
-                                csi = GetConnectorSet(elemCon.Owner).ForwardIterator();
-                            }
+                                if (!listElements.Contains(elemCon.Owner.Id) && GetConnectorSet(elemCon.Owner) != null
+                                                                             && elemCon.Owner.Id != elemMoreTwoCon[i] && elemCon.Owner.Id != conAxis.Owner.Id)
+                                {
+                                    listElements.Add(elemCon.Owner.Id);
+                                    if (x == 0)
+                                    {
+                                        countCon[i]--;
+                                        x++;
+                                    }
+                                    csi_3 = GetConnectorSet(elemCon.Owner).ForwardIterator();
+                                }
 
+                            }
+                            else
+                            {
+                                        
+                                if (!listElements.Contains(item.Owner.Id) && GetConnectorSet(item.Owner) != null
+                                                                          && item.Owner.Id != elemMoreTwoCon[i] && elemCon.Owner.Id != conAxis.Owner.Id)
+                                {
+                                    listElements.Add(item.Owner.Id);
+                                    if (x == 0)
+                                    {
+                                        countCon[i]--;
+                                        x++;
+                                    }
+                                    csi_3 = GetConnectorSet(item.Owner).ForwardIterator();
+                                }
+                                        
+
+                            }
                         }
                     }
-                }
-                for (int i = 0; i < elemMoreTwoCon.Count; i++)
-                {
-                    ConnectorSet conSetGlobal = GetConnectorSet(doc.GetElement(elemMoreTwoCon[i]));
-
-                    foreach (Connector connector in conSetGlobal)
-                    {
-                        int x = 0;
-
-                        ConnectorSet conSet = connector.AllRefs;
-                        ConnectorSetIterator csi_3 = conSet.ForwardIterator();
-
-                        while (csi_3.MoveNext())
-                        {
-                            if (csi_3.Current is Connector elemCon)
-                            {
-                                int count;
-                                int countUnused;
-                                ConnectorSet cs = GetConnectorSet(elemCon.Owner, out countUnused);
-                                count = cs.Size;
-
-                                if (count > 2 && !elemMoreTwoCon.Contains(elemCon.Owner.Id))
-                                {
-                                    elemMoreTwoCon.Add(elemCon.Owner.Id);
-                                    countCon.Add(count - 2 - countUnused);
-
-                                }
-
-                                ConnectorSet conSet_2 = elemCon.AllRefs;
-
-                                foreach (Connector item in conSet_2)
-                                {
-                                    if (item.Owner.Id == elemMoreTwoCon[i])
-                                    {
-                                        if (!listElements.Contains(elemCon.Owner.Id) && GetConnectorSet(elemCon.Owner) != null
-                                            && elemCon.Owner.Id != elemMoreTwoCon[i] && elemCon.Owner.Id != con_Axis.Owner.Id)
-                                        {
-                                            listElements.Add(elemCon.Owner.Id);
-                                            if (x == 0)
-                                            {
-                                                countCon[i]--;
-                                                x++;
-                                            }
-                                            csi_3 = GetConnectorSet(elemCon.Owner).ForwardIterator();
-                                        }
-
-                                    }
-                                    else
-                                    {
-                                        
-                                        if (!listElements.Contains(item.Owner.Id) && GetConnectorSet(item.Owner) != null
-                                           && item.Owner.Id != elemMoreTwoCon[i] && elemCon.Owner.Id != con_Axis.Owner.Id)
-                                        {
-                                            listElements.Add(item.Owner.Id);
-                                            if (x == 0)
-                                            {
-                                                countCon[i]--;
-                                                x++;
-                                            }
-                                            csi_3 = GetConnectorSet(item.Owner).ForwardIterator();
-                                        }
-                                        
-
-                                    }
-                                }
-
-
-
-                            }
-                        }
 
 
 
                         
-                    }
                 }
             }
 
