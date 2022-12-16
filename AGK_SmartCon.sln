@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31624.102
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "00_SmartCon_RibonPanel", "00_SmartCon_RibonPanel\00_SmartCon_RibonPanel.csproj", "{3C89FB67-6D4C-4CE5-A5FF-BBD09361A1C6}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_FamilyManager", "01_FamilyManager\01_FamilyManager.csproj", "{9F0FB791-9BEC-431E-AECF-9078313DFAD9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04_LossTemp", "04_LossTemp\04_LossTemp.csproj", "{6DB96B80-AE2D-41BB-B527-1FBA9BA25260}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_CreateScheduleForAssembly", "05_CreateScheduleForAssembly\05_CreateScheduleForAssembly.csproj", "{3CAE6419-C36D-4859-B955-343E7579B917}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{6DB96B80-AE2D-41BB-B527-1FBA9BA25260}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DB96B80-AE2D-41BB-B527-1FBA9BA25260}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DB96B80-AE2D-41BB-B527-1FBA9BA25260}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CAE6419-C36D-4859-B955-343E7579B917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CAE6419-C36D-4859-B955-343E7579B917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CAE6419-C36D-4859-B955-343E7579B917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CAE6419-C36D-4859-B955-343E7579B917}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{89E702C8-D137-4680-8A40-1BFECFE6289E} = {E007DD9A-EDE4-4CB9-A6B9-34958FDBFEF0}
 		{9F0FB791-9BEC-431E-AECF-9078313DFAD9} = {FED52FDE-6F6A-45DF-89BA-FFA05C0F1DD7}
 		{6DB96B80-AE2D-41BB-B527-1FBA9BA25260} = {E007DD9A-EDE4-4CB9-A6B9-34958FDBFEF0}
+		{3CAE6419-C36D-4859-B955-343E7579B917} = {E007DD9A-EDE4-4CB9-A6B9-34958FDBFEF0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2F9A62B0-82ED-44F5-8EF0-AB00CA3EFBFA}

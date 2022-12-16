@@ -17,6 +17,12 @@ namespace RotateElements
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
             Selection sel = uiapp.ActiveUIDocument.Selection;
+            if (uidoc == null)
+            {
+                TaskDialog.Show("No Active Document", "There's no active document in Revit.", TaskDialogCommonButtons.Ok);
+                return Autodesk.Revit.UI.Result.Failed;
+            }
+            
 
             Filter filter = new Filter();
 
@@ -25,15 +31,10 @@ namespace RotateElements
             try
             {
                 elemForRotate = doc.GetElement(sel.PickObject(ObjectType.Element, filter, "Выберите элемент который необходимо повернуть"));
-                if (elemForRotate == null)
-                {
-                    TaskDialog.Show("Ошибка", "Объект для вращения не найден");
-                    return Result.Failed;
-                }
             }
             catch (Exception)
             {
-                TaskDialog.Show("Внимание", "Объект для вращения не найден");
+                //TaskDialog.Show("Внимание", "Объект для вращения не найден", TaskDialogCommonButtons.Ok);
                 return Result.Failed;
             }
 
@@ -45,7 +46,7 @@ namespace RotateElements
             }
             catch (Exception)
             {
-                TaskDialog.Show("Внимание", "Ось вращения не найдена");
+                //TaskDialog.Show("Внимание", "Ось вращения не найдена", TaskDialogCommonButtons.Ok);
                 return Result.Failed;
             }
 
