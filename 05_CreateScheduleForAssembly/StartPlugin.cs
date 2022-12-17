@@ -22,31 +22,60 @@ namespace CreateScheduleForAssembly
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
 
-            View viewTemplate = (from v in new FilteredElementCollector(doc)
-                                 .OfClass(typeof(View))
-                                 .Cast<View>()where v.IsTemplate == true && v.Name == "Template"
-                                 select v)
-                                 .First();
+            View viewTemplate = (new FilteredElementCollector(doc).OfClass(typeof(View))
+                    .Cast<View>()
+                    .Where(v => v.IsTemplate == true && v.Name == "Template")).First();
 
-            using (var tx = new Transaction(doc))
+            IEnumerable<AssemblyInstance> assemlby = (new FilteredElementCollector(doc).OfClass(typeof(AssemblyInstance))
+                .Cast<AssemblyInstance>()
+                .Where(v => v.Name.Contains("Трубопровод")));
+
+            List<string> allScheduleName = (new FilteredElementCollector(doc).OfClass(typeof(ViewSchedule)).Cast<ViewSchedule>())
+                .Select(x => x.Name).ToList();
+
+
+            using (Transaction tx = new Transaction(doc))
             {
                 tx.Start("CreateSchedule");
 
-                var vs = ViewSchedule.CreateSchedule(doc, new ElementId(BuiltInCategory.INVALID));
+                foreach (AssemblyInstance item in assemlby)
+                {
+                    if (allScheduleName.Contains(item.Name)) continue;
+                    ViewSchedule vs = ViewSchedule.CreateSchedule(doc, new ElementId(BuiltInCategory.INVALID));
 
-                vs.Name = "Спецификация_1";
+                    vs.Name = item.Name;
 
-                doc.Regenerate();
+                       
+                    const string ADSK_group_GUID = "3de5f1a4-d560-4fa8-a74f-25d250fb3401";// GUID параметра ADSK_Группирование
+                    const string ADSK_position_GUID = "ae8ff999-1f22-4ed7-ad33-61503d85f0f4";// GUID параметра ADSK_Позиция
+                    const string ADSK_name_GUID = "e6e0f5cd-3e26-485b-9342-23882b20eb43";// GUID параметра ADSK_Наименование
 
-                vs.ApplyViewTemplateParameters(viewTemplate);
+                    doc.Regenerate();
 
-                var sFieldId = SchedulesMethods.FindField(vs, "3de5f1a4-d560-4fa8-a74f-25d250fb3401").FieldId;
+                    vs.ApplyViewTemplateParameters(viewTemplate);
 
-                ScheduleFilter filter = new ScheduleFilter(sFieldId, ScheduleFilterType.Equal, "String");
+                    ScheduleFieldId sFieldId = SchedulesMethods.FindField(vs, ADSK_group_GUID).FieldId; 
 
-                vs.Definition.AddFilter(filter);
+                    ScheduleFilter filter = new ScheduleFilter(sFieldId, ScheduleFilterType.Equal, item.Name);
 
+                    vs.Definition.AddFilter(filter);
 
+                    List<ElementId> listForAdding = new List<ElementId>();
+
+                    foreach (ElementId elemId in item.GetMemberIds())
+                    {
+                        Element elem = doc.GetElement(elemId);
+                        elem.get_Parameter(Guid.Parse(ADSK_group_GUID)).Set(vs.Name);
+
+                        var listsub = ElementsMethods.GetAllSubelements(doc, elem);
+                        if (listsub != null) listForAdding.AddRange(listsub);
+                    }
+                    if (listForAdding?.Count > 0)
+                    {
+                        item.AddMemberIds(listForAdding);
+                    }
+
+                }
                 tx.Commit();
             }
 

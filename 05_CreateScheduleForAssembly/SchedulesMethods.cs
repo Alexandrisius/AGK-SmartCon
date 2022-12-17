@@ -12,10 +12,16 @@ namespace CreateScheduleForAssembly
         public static void AddRegularFieldToSchedule(ViewSchedule schedule, string guid)
         {
             ScheduleDefinition definition = schedule.Definition;
-
-
-            var schedulableField = schedule.Definition.GetSchedulableFields()
-                .FirstOrDefault(x => IsSharedParameterSchedulableField(schedule.Document, x.ParameterId, new Guid(guid)));
+            
+            SchedulableField schedulableField = null;
+            foreach (var x in schedule.Definition.GetSchedulableFields())
+            {
+                if (IsSharedParameterSchedulableField(schedule.Document, x.ParameterId, new Guid(guid)))
+                {
+                    schedulableField = x;
+                    break;
+                }
+            }
 
             if (schedulableField != null)
             {
@@ -24,22 +30,20 @@ namespace CreateScheduleForAssembly
         }
         private static bool IsSharedParameterSchedulableField(Document document, ElementId parameterId, Guid sharedParameterId)
         {
-            var sharedParameterElement = document.GetElement(parameterId) as SharedParameterElement;
+            SharedParameterElement sharedParameterElement = document.GetElement(parameterId) as SharedParameterElement;
 
             return sharedParameterElement?.GuidValue == sharedParameterId;
         }
         public static ScheduleField FindField(ViewSchedule schedule, string guid)
         {
             ScheduleDefinition definition = schedule.Definition;
-            ScheduleField foundField = null;
 
-            var sharParam = SharedParameterElement.Lookup(schedule.Document, Guid.Parse(guid));
-            
+            SharedParameterElement sharParam = SharedParameterElement.Lookup(schedule.Document, Guid.Parse(guid));
             ElementId paramId = sharParam.Id;
 
             foreach (ScheduleFieldId fieldId in definition.GetFieldOrder())
             {
-                foundField = definition.GetField(fieldId);
+                ScheduleField foundField = definition.GetField(fieldId);
                 if (foundField.ParameterId == paramId)
                 {
                     return foundField;

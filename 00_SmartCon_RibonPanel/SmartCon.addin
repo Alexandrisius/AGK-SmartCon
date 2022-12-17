@@ -1,17 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RevitAddIns>
-  <AddIn Type="Command">
-    <Text>Command SmartCon</Text>
-    <Description>Command SmartCon</Description>
-    <Assembly>SmartCon.dll</Assembly>
-    <FullClassName>SmartCon.Command</FullClassName>
-    <ClientId>5370a6a0-1f61-4e62-9bae-ede9810f777f</ClientId>
-    <VendorId>AGK</VendorId>
-    <VendorDescription>Klimovich Alexandr</VendorDescription>
-  </AddIn>
   <AddIn Type="Application">
     <Name>Application SmartCon</Name>
-    <Assembly>SmartCon.dll</Assembly>
+    <Assembly>SmartCon/SmartCon.dll</Assembly>
     <FullClassName>SmartCon.App</FullClassName>
     <ClientId>3866a3b4-1c66-451c-b1f9-6b7010cc8077</ClientId>
     <VendorId>AGK</VendorId>

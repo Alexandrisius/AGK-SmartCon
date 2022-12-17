@@ -27,8 +27,6 @@ namespace SmartCon
         public Result OnStartup(UIControlledApplication a)
         {
             Autodesk.Revit.UI.RibbonPanel ribbonPanel_PS = PipeSystemRibbonPanel(a);
-            Autodesk.Revit.UI.RibbonPanel ribbonPanel_FM = FamlyManRibbonPanel(a);
-
 
             #region CreateButtonPipeConnect
             Image LargeImageConnect = Properties.Resources.PipeCon_32х32;
@@ -47,34 +45,6 @@ namespace SmartCon
             PushButton button_Connect_1 = ribbonPanel_PS.AddItem(PBD_1) as PushButton;
 
             button_Connect_1.Enabled = true;
-
-            var tempPath = Path.Combine(Path.GetTempPath(),
-                "SmartCon.Resources.PipeCon_Movie.wmv");
-
-            using (Stream stream = Assembly
-                .GetExecutingAssembly()
-                .GetManifestResourceStream(
-                    "SmartCon.Resources.PipeCon_Movie.wmv"))
-            {
-                var buffer = new byte[stream.Length];
-
-                stream.Read(buffer, 0, buffer.Length);
-
-                using (FileStream fs = new FileStream(
-                    tempPath, FileMode.Create, FileAccess.Write))
-                {
-                    fs.Write(buffer, 0, buffer.Length);
-                }
-            }
-
-            RibbonToolTip button_Connect_1_ToolTip = new RibbonToolTip()
-            {
-                Title = "Присоединение трубопроводных элементов.",
-                Content = "Присоединяет коннекторы компонентов трубопроводных систем. Базовым элементом является компонент который пользователь выбрал в первую очередь.",
-                ExpandedContent = "Обучающий ролик.",
-                ExpandedVideo = new Uri(tempPath),
-            };
-            SetRibbonItemToolTip(button_Connect_1, button_Connect_1_ToolTip);
 
             #endregion
 
@@ -114,41 +84,23 @@ namespace SmartCon
             button_Connect_AE.Enabled = true;
             #endregion
 
-            #region CreateButtonLossTemp
-            Image LargeImageConnect_LT = Properties.Resources.LossTemp_32x32;
-            ImageSource largeImageConnectSaSource_LT = GetImageSource(LargeImageConnect_LT);
-            Image imageConnect_LT = Properties.Resources.LossTemp_16x16;
-            ImageSource imageConnectSource_LT = GetImageSource(imageConnect_LT);
+            //#region CreateButtonLossTemp
+            //Image LargeImageConnect_LT = Properties.Resources.LossTemp_32x32;
+            //ImageSource largeImageConnectSaSource_LT = GetImageSource(LargeImageConnect_LT);
+            //Image imageConnect_LT = Properties.Resources.LossTemp_16x16;
+            //ImageSource imageConnectSource_LT = GetImageSource(imageConnect_LT);
 
-            PushButtonData PBD_LT = new PushButtonData("Loss Temperature", "Loss\nTemperature", this.path + "\\LossTemp.dll", "LossTemp.StartPlugin")
-            {
-                ToolTip = "Вычисляет потерю температуры теплоносителя.",
-                LongDescription = "Вычисляет потерю температуры теплоносителя по длине трубы. ",
-                Image = imageConnectSource_LT,
-                LargeImage = largeImageConnectSaSource_LT
-            };
+            //PushButtonData PBD_LT = new PushButtonData("Loss Temperature", "Loss\nTemperature", this.path + "\\LossTemp.dll", "LossTemp.StartPlugin")
+            //{
+            //    ToolTip = "Вычисляет потерю температуры теплоносителя.",
+            //    LongDescription = "Вычисляет потерю температуры теплоносителя по длине трубы. ",
+            //    Image = imageConnectSource_LT,
+            //    LargeImage = largeImageConnectSaSource_LT
+            //};
 
-            PushButton button_Connect_LT = ribbonPanel_PS.AddItem(PBD_LT) as PushButton;
-            button_Connect_LT.Enabled = false;
-            #endregion
-
-            #region CreateButtonFamilyMan
-            Image LargeImageConnect_2 = Properties.Resources.FamilyMan_32х32;
-            ImageSource largeImageConnectSaSource_2 = GetImageSource(LargeImageConnect_2);
-            Image imageConnect_2 = Properties.Resources.FamilyMan_16х16;
-            ImageSource imageConnectSource_2 = GetImageSource(imageConnect_2);
-
-            PushButtonData PBD_2 = new PushButtonData("Family Manager", "Family\nManager", this.path + "\\FamilyManager.dll", "FamilyManager.StartPlugin")
-            {
-                ToolTip = "Менеджер семейств.",
-                LongDescription = "Система менеджмента элементов модели. ",
-                Image = imageConnectSource_2,
-                LargeImage = largeImageConnectSaSource_2
-            };
-
-            PushButton button_Connect_2 = ribbonPanel_FM.AddItem(PBD_2) as PushButton;
-            button_Connect_2.Enabled = false;
-            #endregion
+            //PushButton button_Connect_LT = ribbonPanel_PS.AddItem(PBD_LT) as PushButton;
+            //button_Connect_LT.Enabled = false;
+            //#endregion
 
             return Result.Succeeded;
         }
@@ -192,26 +144,6 @@ namespace SmartCon
 
             }
             return ribbonPanel_PS;
-        }
-
-        public Autodesk.Revit.UI.RibbonPanel FamlyManRibbonPanel(UIControlledApplication a)
-        {
-            Autodesk.Revit.UI.RibbonPanel ribbonPanel_FM = null;
-
-            try
-            {
-                Autodesk.Revit.UI.RibbonPanel panel = a.CreateRibbonPanel(_tab, "Family Manager");
-            }
-            catch { }
-            List<Autodesk.Revit.UI.RibbonPanel> panels = a.GetRibbonPanels(_tab);
-            foreach (var p in panels)
-            {
-                if (p.Name == "Family Manager")
-                {
-                    ribbonPanel_FM = p;
-                }
-            }
-            return ribbonPanel_FM;
         }
 
         public BitmapImage GetBitmapImage(string imagePath)
