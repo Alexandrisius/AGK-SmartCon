@@ -30,17 +30,18 @@ namespace CreateScheduleForAssembly
         /// <summary>
         /// Метод для сортировки элементов по списку параметров
         /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="elemId"></param>
-        /// <param name="guid">Список уникальных идентификаторов параметров для сортировки элементов.
+        /// <param name="elem">Список элементов для сортировки</param>
+        /// <param name="param">Список уникальных идентификаторов параметров для сортировки элементов.
         /// Порядок подачи параметров определяет порядок сортировки.</param>
-        public static List<ElementId> SortElemFromAssembly(Document doc, List<ElementId> elemId, List<Parameter> param)
+        public static ICollection<ElementId> SortElemFromAssembly(Document doc,ICollection<ElementId> elem, List<string> param)
         {
-            List < ElementId > elemIdResult = new List<ElementId>();
+            ICollection<ElementId> elemResult = elem;
 
+            SortedByParams sp = new SortedByParams(doc,param);
 
+            elemResult.ToList().Sort(sp);
 
-            return elemIdResult;
+            return elemResult;
         }
     }
 }

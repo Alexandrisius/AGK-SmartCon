@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
+using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using Document = Autodesk.Revit.DB.Document;
 
 namespace CreateScheduleForAssembly
 {
@@ -48,7 +51,9 @@ namespace CreateScheduleForAssembly
                        
                     const string ADSK_group_GUID = "3de5f1a4-d560-4fa8-a74f-25d250fb3401";// GUID параметра ADSK_Группирование
                     const string ADSK_position_GUID = "ae8ff999-1f22-4ed7-ad33-61503d85f0f4";// GUID параметра ADSK_Позиция
+                    const string ADSK_posScheme_GUID = "95e5eb64-92e1-436b-80d8-f06505defc34";// GUID параметра ADSK_Позиция на схеме
                     const string ADSK_name_GUID = "e6e0f5cd-3e26-485b-9342-23882b20eb43";// GUID параметра ADSK_Наименование
+                    String uniformat = new ElementId(BuiltInParameter.UNIFORMAT_CODE).ToString();
 
                     doc.Regenerate();
 
@@ -73,6 +78,26 @@ namespace CreateScheduleForAssembly
                     if (listForAdding?.Count > 0)
                     {
                         item.AddMemberIds(listForAdding);
+                    }
+                    List<string> paramList = new List<string>();
+                    paramList.Add(uniformat);
+                    paramList.Add(ADSK_name_GUID);
+
+                    int position = 1;
+                    string name = "";
+                    ICollection<ElementId> listForSort = ElementsMethods.SortElemFromAssembly(doc, item.GetMemberIds(), paramList);
+                    foreach (var sortElem in listForSort)
+                    {
+                        if (doc.GetElement(sortElem).get_Parameter(Guid.Parse(ADSK_posScheme_GUID)).Set(position.ToString()))
+                        {
+                            string name2 = doc.GetElement(sortElem).get_Parameter(Guid.Parse(ADSK_name_GUID)).AsString();
+                            if (name2 != name)
+                            {
+                                position++;
+                                name = name2;
+                            }
+                           
+                        }
                     }
 
                 }
