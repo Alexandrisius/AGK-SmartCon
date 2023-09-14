@@ -20,8 +20,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBox x:Name="AngleText" HorizontalAlignment="Center" TextWrapping="Wrap" Text="45" VerticalAlignment="Center" Width="80" Height="45" TextAlignment="Center" FontSize="20" MaxLines="360" MaxLength="3" VerticalContentAlignment="Center" TextChanged="AngleText_TextChanged" Background="#FFDDDDDD" Grid.Row="1" Grid.Column="1"/>
-        <Button x:Name="Left" Content="↺" HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" Click="Button_Left" Height="45" FontSize="20" KeyDown="Button_KeyDown_Left" Cursor="Hand" Grid.Row="1"/>
-        <Button x:Name="Right" Content="↻" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0,-0.599" Width="70" BorderThickness="1,1,1,1" Click="Button_Right" Height="45" FontSize="20" KeyDown="Button_KeyDown_Right" Cursor="Hand" Grid.Row="1" Grid.Column="2"/>
+        <Button x:Name="Left" Content="↺" HorizontalAlignment="Center" VerticalAlignment="Center" Width="70" Click="Button_Left" Height="45" FontSize="20" Cursor="Hand" Grid.Row="1"/>
+        <Button x:Name="Right" Content="↻" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0,-0.599" Width="70" BorderThickness="1,1,1,1" Click="Button_Right" Height="45" FontSize="20" Cursor="Hand" Grid.Row="1" Grid.Column="2"/>
         <Label Content="Введите угол поворота" HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="180" Height="31" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="3" Margin="0,0,0,0"/>
         <ComboBox x:Name="Box" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="130" IsSynchronizedWithCurrentItem="True" Cursor="Hand" Grid.Row="4" Height="22" Margin="0,0,0,15" >
             <ComboBoxItem Content="Вверх слева"/>
@@ -35,8 +35,11 @@
         <Label Content="Уклон мм/м.п." HorizontalAlignment="Center" VerticalAlignment="Top" Width="280" Height="26" VerticalContentAlignment="Center" FontWeight="Normal" HorizontalContentAlignment="Center" Grid.Row="4" Grid.ColumnSpan="2"/>
         <Button Content="Уклон" HorizontalAlignment="Left" Margin="85,0,0,15" VerticalAlignment="Bottom" Width="50" Height="22" Click="Slope_Click" Cursor="Hand" Grid.Row="4" Grid.Column="1">
         </Button>
-        <Button Content="Изменить" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Height="46" Click="Button_Reflex" Cursor="Hand" Grid.Row="2" Grid.Column="1"/>
-
+        <Button HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="80" Height="46" Click="Button_Reflex" Cursor="Hand" Grid.Row="2" Grid.Column="1">
+            <Button.Content>
+                <TextBlock Text="Изменить соединение" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button.Content>
+        </Button>
 
     </Grid>
 </Window>

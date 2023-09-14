@@ -19,7 +19,7 @@ namespace RotateElements
                 if (angle != 0 && type == 1)
                 {
                     ElementTransformUtils.RotateElements(doc, elemId, lineZ, angle * Math.PI / 180);
-
+                   
                 }
                 if (angle != 0 && type == 2)
                 {

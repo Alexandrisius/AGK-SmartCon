@@ -45,7 +45,12 @@ namespace PipeConnect
 
             return listElements;
         }
-
+        /// <summary>
+        /// Метод получает набор коннекторов у элемента в зависимости является ли он 
+        /// линейным объектов Revit либо экзеплярным.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
         public static ConnectorSet GetConnectorSet(Element element)
         {
             if (element is FamilyInstance family)
@@ -62,7 +67,11 @@ namespace PipeConnect
 
             return null;
         }
-
+        /// <summary>
+        /// Метод для получения всех неприсоединённых коннекторов у владельца коннектора.
+        /// </summary>
+        /// <param name="connector"></param>
+        /// <returns></returns>
         public static ICollection<Connector> GetFreeConnectors(Connector connector)
         {
             ICollection<Connector>freeCon = new List<Connector>();

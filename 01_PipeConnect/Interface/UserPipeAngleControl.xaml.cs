@@ -121,32 +121,7 @@ namespace PipeConnect
 
         }
 
-        private void Button_KeyDown_Right(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.E)
-            {
-                Button_Right(Right, null);
-            }
-            if (e.Key == Key.Q)
-            {
-                Button_Left(Left, null);
-
-            }
-        }
-
-        private void Button_KeyDown_Left(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.E)
-            {
-                Button_Right(Right, null);
-            }
-            if (e.Key == Key.Q)
-            {
-                Button_Left(Left, null);
-
-            }
-        }
-
+                
         List<Connector> freeCon = new List<Connector>();
 
         private void Button_Reflex(object sender, RoutedEventArgs e)
@@ -164,5 +139,6 @@ namespace PipeConnect
             }
             
         }
+        
     }
 }

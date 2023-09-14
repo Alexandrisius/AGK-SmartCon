@@ -45,7 +45,7 @@ namespace PipeConnect
 
         public static void TurnAroundAxis(Document doc, Connector con1, Connector con2, out Connector usedConHere, List<Connector> usedConThere)
         {
-            ICollection<Connector> freeCon = ElementConnectorIterator.GetFreeConnectors(con1);
+            ICollection<Connector> freeCon = ElementConnectorIterator.GetFreeConnectors(con1);// 
             usedConHere = null;
             int count = freeCon.Count;
             

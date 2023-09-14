@@ -5,44 +5,50 @@ namespace RotateElements
 {
     class Iterator
     {
+        /// <summary>
+        /// Метод который возвращает все элементы цепочки начиная с выбранного в противоположную сторону от второго выбранного элемента.
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="elemForRotate"></param>
+        /// <param name="conAxis"> Коннектор ось Z которого является осью вращения ветки </param>
+        /// <returns>Возвращает список id элементов</returns>
         public static ICollection<ElementId> GetElements(Document doc, Element elemForRotate, Connector conAxis)
         {
-            ICollection<ElementId> listElements = new List<ElementId>();//список уникальный элементов трассировки
+            ICollection<ElementId> listUniqueElements = new List<ElementId>();//список уникальный элементов трассировки
 
             List<ElementId> elemMoreTwoCon = new List<ElementId>();// список элементов у которых больше двух коннекторов
 
-            List<int> countCon = new List<int>(); // лист показывающий сколько раз нужно пройти по элементу из "elemMoreTwoCon"
+            List<int> countRemainsAnalyze = new List<int>(); // лист показывающий сколько раз нужно пройти по элементу из "elemMoreTwoCon"
 
             ConnectorSet connectorSet = GetConnectorSet(elemForRotate); // получаю все коннектора элемента для вращения
 
-            if (connectorSet == null) return listElements; // если их нет, то возвращаю пустой список метода
+            if (connectorSet == null) return listUniqueElements; // если их нет, то возвращаю пустой список метода
             ConnectorSetIterator csi = connectorSet.ForwardIterator(); // получаю итератор из списка коннекторов для прохода по каждому из них
 
             while (csi.MoveNext()) // проверяю можно ли идти вперёд по коннекторам и если можно то прохожу вперёд
-                                   // (максимально возможная величина циклов = 20)
             {
-                if (!(csi.Current is Connector connector)) continue; // проверяю являетмя ли текущий элемент коннектором и если
+                if (!(csi.Current is Connector connector) || ((Connector)csi.Current).Domain == Domain.DomainUndefined) continue; // проверяю являетмя ли текущий элемент коннектором и если
                                                                      // нет то пропускаю итерацию
-                int count = GetConnectorSet(connector.Owner, out int countUnused).Size; // получаю общее количество коннекторов
-                                                                                        // и неприсоединённые коннектора в текущем семействе
+                int countCon = GetConnectorSet(connector.Owner, out int countUnusedCon).Size; // получаю общее количество коннекторов
+                                                                                        // и количество неприсоединённых коннекторов в текущем семействе
 
-                if (count > 2 && !elemMoreTwoCon.Contains(connector.Owner.Id)) // отфильтровываю элементы у которых больше двух коннекторов 
+                if (countCon > 2 && !elemMoreTwoCon.Contains(connector.Owner.Id)) 
                 {
                     elemMoreTwoCon.Add(connector.Owner.Id); // добавляю в список по которому нужно будет потом пройти ещё n количество раз
 
-                    countCon.Add(count - 2 - countUnused); //определяю сколько раз ещё нужно будет пройти по элементам
+                    countRemainsAnalyze.Add(countCon - 2 - countUnusedCon); //определяю сколько раз ещё нужно будет пройти по элементам
                 }
 
-                if (!listElements.Contains(connector.Owner.Id)) // добавляю уникальный элемент
+                if (!listUniqueElements.Contains(connector.Owner.Id)) 
                 {
-                    listElements.Add(connector.Owner.Id);
+                    listUniqueElements.Add(connector.Owner.Id);// добавляю уникальный элемент
                 }
                 ConnectorSet conSet = connector.AllRefs; // получаю у коннектора ссылку на соседний коннектор с которым он соединён
 
                 foreach (Connector elemCon in conSet) // прохожу по списку из одного или двух коннекторов-ссылок (у трубы 2 референса,
                                                       // у инстансев всегда один)
                 {
-                    if (!listElements.Contains(elemCon.Owner.Id) && GetConnectorSet(elemCon.Owner) != null
+                    if (!listUniqueElements.Contains(elemCon.Owner.Id) && GetConnectorSet(elemCon.Owner) != null
                                                                  && elemCon.Owner.Id != conAxis.Owner.Id)
                     {
                         csi = GetConnectorSet(elemCon.Owner).ForwardIterator(); // проеряю уникальность элемента и в случае если это следующий
@@ -53,65 +59,65 @@ namespace RotateElements
             }
             for (int i = 0; i < elemMoreTwoCon.Count; i++) // цикл прохода по списку всех уэлементов у которых более двух коннекторов
             {
-                ConnectorSet conSetGlobal = GetConnectorSet(doc.GetElement(elemMoreTwoCon[i])); // получаю спискок коннекторов у элемента "elemMoreTwoCon"
+                ConnectorSet conSet_EMTC = GetConnectorSet(doc.GetElement(elemMoreTwoCon[i])); // получаю спискок коннекторов у элемента "elemMoreTwoCon"
 
-                foreach (Connector connector in conSetGlobal) // проходу по всем коннекторам элемента "elemMoreTwoCon"
+                foreach (Connector con_EMTC in conSet_EMTC) // проходу по всем коннекторам элемента "elemMoreTwoCon"
                 {
                     int x = 0; // счётчик захода в ответвление, чтобы отнять потом из элемента "elemMoreTwoCon"
                                // величину показывающую сколько раз по нему нужно пройти
 
-                    ConnectorSet conSet = connector.AllRefs; // поиск референсов у коннекторам элемента "elemMoreTwoCon"
-                    ConnectorSetIterator csi_3 = conSet.ForwardIterator();// получаю итератор из списка референсов для прохода по каждому из них
+                    ConnectorSet conSet_Refs = con_EMTC.AllRefs; // поиск референсов у коннектора элемента "elemMoreTwoCon"
+                    ConnectorSetIterator csi_EMTC = conSet_Refs.ForwardIterator();// получаю итератор из списка референсов для прохода по каждому из них
 
-                    while (csi_3.MoveNext()) // проходчик по референсам, максимум 2 элемента списка
+                    while (csi_EMTC.MoveNext()) // проходчик по референсам, максимум 2 элемента списка
                     {
-                        if (!(csi_3.Current is Connector elemCon)) continue;// проверяю являетмя ли текущий элемент коннектором и если
-                                                                            // нет то пропускаю итерацию
-                        ConnectorSet cs = GetConnectorSet(elemCon.Owner, out int countUnused);// получаю общее количество коннекторов
+                        if (!(csi_EMTC.Current is Connector elemCon_EMTC) 
+                            || ((Connector)csi_EMTC.Current).Domain == Domain.DomainUndefined) continue;// проверяю является ли текущий элемент коннектором и если
+                                                                               // нет то пропускаю итерацию
+                        int countCon_EMTC = GetConnectorSet(elemCon_EMTC.Owner, out int countUnused).Size;// получаю общее количество коннекторов
                                                                                               // и неприсоединённые коннектора в текущем семействе
-                        int count = cs.Size;
 
-                        if (count > 2 && !elemMoreTwoCon.Contains(elemCon.Owner.Id)) // если на пути прохода итератора встерчается элемент с кол-вом коннекторов >2
+                        if (countCon_EMTC > 2 && !elemMoreTwoCon.Contains(elemCon_EMTC.Owner.Id)) // если на пути прохода итератора встерчается элемент с кол-вом коннекторов >2
                                                                                      //и мы по нему ещё ни разу не проходили до добавляем его в список и даём
                                                                                      //номер-количество проходов 
                         {
-                            elemMoreTwoCon.Add(elemCon.Owner.Id);
-                            countCon.Add(count - 2 - countUnused);
+                            elemMoreTwoCon.Add(elemCon_EMTC.Owner.Id);
+                            countRemainsAnalyze.Add(countCon_EMTC - 2 - countUnused);
 
                         }
 
-                        ConnectorSet conSet_2 = elemCon.AllRefs;
+                        ConnectorSet conSet_Refs_2 = elemCon_EMTC.AllRefs;
 
-                        foreach (Connector item in conSet_2)
+                        foreach (Connector con_EMTC_2 in conSet_Refs_2)
                         {
-                            if (item.Owner.Id == elemMoreTwoCon[i])
+                            if (con_EMTC_2.Owner.Id == elemMoreTwoCon[i])
                             {
-                                if (!listElements.Contains(elemCon.Owner.Id) && GetConnectorSet(elemCon.Owner) != null
-                                                                             && elemCon.Owner.Id != elemMoreTwoCon[i] && elemCon.Owner.Id != conAxis.Owner.Id)
+                                if (!listUniqueElements.Contains(elemCon_EMTC.Owner.Id) && GetConnectorSet(elemCon_EMTC.Owner) != null
+                                                                             && elemCon_EMTC.Owner.Id != elemMoreTwoCon[i] && elemCon_EMTC.Owner.Id != conAxis.Owner.Id)
                                 {
-                                    listElements.Add(elemCon.Owner.Id);
+                                    listUniqueElements.Add(elemCon_EMTC.Owner.Id);
                                     if (x == 0)
                                     {
-                                        countCon[i]--;
+                                        countRemainsAnalyze[i]--;
                                         x++;
                                     }
-                                    csi_3 = GetConnectorSet(elemCon.Owner).ForwardIterator();
+                                    csi_EMTC = GetConnectorSet(elemCon_EMTC.Owner).ForwardIterator();
                                 }
 
                             }
                             else
                             {
                                         
-                                if (!listElements.Contains(item.Owner.Id) && GetConnectorSet(item.Owner) != null
-                                                                          && item.Owner.Id != elemMoreTwoCon[i] && elemCon.Owner.Id != conAxis.Owner.Id)
+                                if (!listUniqueElements.Contains(con_EMTC_2.Owner.Id) && GetConnectorSet(con_EMTC_2.Owner) != null
+                                                                          && con_EMTC_2.Owner.Id != elemMoreTwoCon[i] && elemCon_EMTC.Owner.Id != conAxis.Owner.Id)
                                 {
-                                    listElements.Add(item.Owner.Id);
+                                    listUniqueElements.Add(con_EMTC_2.Owner.Id);
                                     if (x == 0)
                                     {
-                                        countCon[i]--;
+                                        countRemainsAnalyze[i]--;
                                         x++;
                                     }
-                                    csi_3 = GetConnectorSet(item.Owner).ForwardIterator();
+                                    csi_EMTC = GetConnectorSet(con_EMTC_2.Owner).ForwardIterator();
                                 }
                                         
 
@@ -125,7 +131,7 @@ namespace RotateElements
                 }
             }
 
-            return listElements;
+            return listUniqueElements;
         }
 
         public static ConnectorSet GetConnectorSet(Element element, out int countUnused)

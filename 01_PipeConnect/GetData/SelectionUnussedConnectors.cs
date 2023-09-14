@@ -34,6 +34,14 @@ namespace PipeConnect
                     return true;
                 }
             }
+            if (elem is FlexPipe flexPipe)
+            {
+                ConnectorManager list = flexPipe.ConnectorManager;
+                if (list.UnusedConnectors.Size > 0)
+                {
+                    return true;
+                }
+            }
 
             return false;
         }

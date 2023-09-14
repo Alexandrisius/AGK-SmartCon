@@ -22,7 +22,7 @@ namespace PipeConnect
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
             Selection sel = uiapp.ActiveUIDocument.Selection;
-            Connector conDetector = null;//временный коннектор чтобы нельзя было выбрать один и тотже элемент
+            Connector conDetector = null;//временный коннектор чтобы нельзя было выбрать один и тот же элемент
             Connector con1 = PointOriginConnectors.GetConnector(sel, doc, conDetector);
             if (con1 == null)
             {
@@ -56,11 +56,25 @@ namespace PipeConnect
                     tx.Start("MoveElement");
                     if (x == 1)
                     {
-                        param.Set(con2.Radius * 2); // изменение размера присоединяемого элемента
+                        try
+                        {
+                            param.Set(con2.Radius * 2); // изменение размера присоединяемого элемента
+                        }
+                        catch (Exception)
+                        {
+
+                        }
                     }
                     if (x == 0)
                     {
-                        param.Set(con2.Radius); // изменение размера присоединяемого элемента
+                        try
+                        {
+                            param.Set(con2.Radius); // изменение размера присоединяемого элемента
+                        }
+                        catch (Exception)
+                        {
+
+                        }
                     }
                     if (x == -1)
                     {

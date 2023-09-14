@@ -69,6 +69,24 @@ namespace PipeConnect
                             }
                         }
                     }
+                    if (elem is FlexPipe flexPipe)
+                    {
+                        ConnectorSet list = flexPipe.ConnectorManager.Connectors;
+                        foreach (Connector item in list)
+                        {
+                            if (!item.IsConnected)
+                            {
+                                if (item.Origin.DistanceTo(point) < length)
+                                {
+                                    length = item.Origin.DistanceTo(point);
+
+                                    connector = item;
+                                }
+                            }
+                        }
+
+                        return connector;
+                    }
 
                     return connector;
                 }
